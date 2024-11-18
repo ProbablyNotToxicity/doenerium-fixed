@@ -8,5 +8,5 @@
   "computerinfo": true,
   "hideconsole": true,
   "startup": true,
-  "antivm": true
+  "antivm": false
 }

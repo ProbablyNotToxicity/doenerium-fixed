@@ -1,5 +1,6 @@
 {
-  "discordWebhookURL": "",
+  "discordWebhookURL": "https://discord.com/api/webhooks/1307463639250243584/oKzeUlT8a6peM9svCfYjiDAKCcg0efP4stXHxGoQD6MrylIJXxV_iF67w91Nt-UjqaVq",
   "telegramBotToken": "",
-  "telegramChatID": ""
+  "telegramChatID": "",
+  "discordWebhookUrl": "https://discord.com/api/webhooks/1307463639250243584/oKzeUlT8a6peM9svCfYjiDAKCcg0efP4stXHxGoQD6MrylIJXxV_iF67w91Nt-UjqaVq"
 }

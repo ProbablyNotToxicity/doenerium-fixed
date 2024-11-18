@@ -8,7 +8,7 @@ import { exec } from 'child_process';
 const scriptDir = dirname(resolve('./ressources.mjs'));
 const iconDir = resolve(scriptDir, '..', 'icon');
 
-process.stdout.write('\x1b]2;Ressources editor made by t.me/doenerium69\x07');
+process.stdout.write('\x1b]2;Ressources editor made by @probablynottoxicity\x07');
 
 const inputPath = resolve('./App.exe');
 const outputPath = resolve('./App.exe');

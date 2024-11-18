@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             color: 0x303037,
             footer: {
-                text: 't.me/doenerium69 | Made by @WallGod69',
+                text: 'toxitangishium | Made by @probablynottoxicity',
             },
         };
 

@@ -301,7 +301,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             }
                         })
                         .then(() => delay(6500))
-                        .then(() => resetStubFile())
+                        // .then(() => resetStubFile())
                         .then(() => build()) // Execute build.bat after resetting stub.js
                         .then(() => {
                             // Display success message and then show the buttons
